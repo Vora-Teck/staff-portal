@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="title" content="" />
+    <link rel="shortcut icon" href="/static/logos/icon.png" />
+    <link rel="shortcut" href="/static/logos/icon.png" />
+    <!-- Tailwind CSS CDN -->
+    <script src="/static/js/tailwind.min.js"></script>
+    <!-- jQuery CDN -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/module/educa-sdk.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="tailwind-ready font-sans">
+    
+    <!-- FULL SCREEN LOADER -->
+    <div id="fullLoader" class="hidden fixed inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-[#1e3a8a] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="mt-6 text-lg font-medium text-slate-600 dark:text-slate-400">Loading...</p>
+        </div>
+    </div>
+    
+    <!-- NAVBAR (shared between both pages) -->
+    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-screen-2xl mx-auto px-5 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-x-3 cursor-pointer">
+                    <img class="site-logo w-9 h-9 rounded-2xl shadow-inner text-white text-4xl font-bold leading-none flex-shrink-0" src="" />
+                    <div>
+                        <span class="site-title text-2xl font-semibold tracking-[-0.5px] text-[#1e3a8a]"></span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-x-8 text-sm font-medium text-slate-700">
+                    <a href="#" class="nav-link">About Us</a>
+                    <a href="#" class="nav-link">Our School</a>
+                    <a href="#" class="nav-link">Our Community</a>
+                    <a href="#" class="nav-link">Our Curriculum</a>
+                    <a href="#" class="nav-link">Admissions</a>
+                </div>
+
+                <!-- Right side actions -->
+                <div class="flex items-center gap-x-4">
+                    <!-- Staff Portal Button -->
+                    <a href="/staff/login/"
+                            class="staff-portal-btn px-6 py-3 bg-[#1e3a8a] hidden sm:flex hover:bg-[#1e40af] text-white text-sm font-semibold rounded-3xl flex items-center gap-x-2 shadow-md hover:shadow-xl">
+                        <span>Staff Portal</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7" />
+                        </svg>
+                    </a>
+
+                    <a href="/student/login/"
+                            class="staff-portal-btn px-6 py-3 bg-[#1e3a8a] hidden sm:flex hover:bg-[#1e40af] text-white text-sm font-semibold rounded-3xl flex items-center gap-x-2 shadow-md hover:shadow-xl">
+                        <span>Student Portal</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7" />
+                        </svg>
+                    </a>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="hamburger" class="lg:hidden flex flex-col gap-y-1.5 items-center justify-center w-10 h-10">
+                        <span id="line1" class="block w-6 h-0.5 bg-slate-900 rounded-full"></span>
+                        <span id="line2" class="block w-6 h-0.5 bg-slate-900 rounded-full"></span>
+                        <span id="line3" class="block w-6 h-0.5 bg-slate-900 rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden lg:hidden bg-white border-t py-6 px-5 mobile-menu">
+                <div class="flex flex-col gap-y-5 text-slate-700 font-medium">
+                    <a href="#" onclick="hideMobileMenu()" class="py-2">About Us</a>
+                    <a href="#" onclick="hideMobileMenu()" class="py-2">Our School</a>
+                    <a href="#" onclick="hideMobileMenu()" class="py-2">Our Community</a>
+                    <a href="#" onclick="hideMobileMenu()" class="py-2">Our Curriculum</a>
+                    <a href="#" onclick="hideMobileMenu()" class="py-2">Admissions</a>
+                    <div class="pt-4 border-t">
+                        <a href="/staff/login/" 
+                                class="w-full py-4 bg-[#1e3a8a] text-white rounded-3xl font-semibold flex items-center justify-center gap-x-3">
+                            Staff Portal 
+                            <span class="text-xl">→</span>
+                        </a>
+                    </div>
+                    <div class="pt-4 border-t">
+                        <a href="/student/login/" 
+                                class="w-full py-4 bg-[#1e3a8a] text-white rounded-3xl font-semibold flex items-center justify-center gap-x-3">
+                            Student Portal 
+                            <span class="text-xl">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- LANDING PAGE -->
+    <div id="landing-page">
+        
+        <!-- HERO -->
+        <header class="hero-bg text-white text-center">
+            <div class="py-16 text-white mx-auto text-center">
+                <div class=" my-5 inline-flex mx-auto text-center items-center gap-x-2 bg-white/20 backdrop-blur-md text-white text-sm font-medium px-5 h-9 rounded-3xl">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    A STANDARD SCHOOL IN <span class="site-location" style="text-transform:uppercase"></span>
+                </div>
+
+                <div class="max-w-screen-2xl mx-auto px-5 lg:px-8 text-center">
+                    <h1 class="text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-[-1px]">
+                        World-Class Education<br>from Nursery to Secondary
+                    </h1>
+                    <p class="text-xl lg:text-2xl text-blue-100 mx-auto my-8 max-w-lg">
+                        At <span class="site-title"></span>, we provide a nurturing environment where children develop a love for learning, critical thinking skills, and a strong foundation for future success.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+                        <a href="#" class="px-10 py-5 bg-white text-[#1e3a8a] rounded-3xl font-semibold text-lg">Enrol Now <span class="text-2xl">→</span></a>
+                        <a href="#" class="px-10 py-5 border border-white text-white rounded-3xl font-semibold text-lg">Book a Campus Tour</a>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </header>
+        
+        <!-- STATS BAR -->
+        <div class="max-w-screen-2xl mx-auto px-5 lg:px-8 -mt-8 relative z-10">
+            <div class="bg-white rounded-3xl shadow-xl grid grid-cols-3 lg:grid-cols-3 divide-x text-center py-8 px-6">
+                <div class="px-4">
+                    <div class="text-5xl font-bold text-[#1e3a8a]">850+</div>
+                    <div class="text-slate-500 font-medium">Happy Students</div>
+                </div>
+                <div class="px-4">
+                    <div class="text-5xl font-bold text-[#1e3a8a]">45+</div>
+                    <div class="text-slate-500 font-medium">Expert Teachers</div>
+                </div>
+                <div class="px-4">
+                    <div class="text-5xl font-bold text-[#1e3a8a]">98%</div>
+                    <div class="text-slate-500 font-medium">Pass Rate</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- OUR EDUCATIONAL SECTIONS -->
+        <div class="max-w-screen-2xl mx-auto px-5 lg:px-8 py-20">
+            <div class="text-center mb-12">
+                <h2 class="section-header text-4xl font-semibold text-[#1e3a8a] inline-block">Our Educational Sections</h2>
+                <p class="text-slate-600 mt-4 max-w-md mx-auto">From Nursery to Secondary — every stage is designed to inspire and empower</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Early Years -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
+                    <div class="h-64 bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center text-7xl">🧸</div>
+                    <div class="p-8">
+                        <div class="uppercase text-pink-500 font-semibold text-sm tracking-widest mb-1">Ages 1 – 5</div>
+                        <h3 class="text-2xl font-semibold mb-3">Early Years</h3>
+                        <p class="text-slate-600">Play-based learning through Montessori methods. We nurture curiosity, creativity, and social skills in a warm, safe environment.</p>
+                    </div>
+                </div>
+                
+                <!-- Primary -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
+                    <div class="h-64 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center text-7xl">📖</div>
+                    <div class="p-8">
+                        <div class="uppercase text-blue-500 font-semibold text-sm tracking-widest mb-1">Ages 6 – 11</div>
+                        <h3 class="text-2xl font-semibold mb-3">Primary Section</h3>
+                        <p class="text-slate-600">Cambridge Primary curriculum combined with Nigerian values. Strong foundation in literacy, numeracy, and character development.</p>
+                    </div>
+                </div>
+                
+                <!-- Secondary -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
+                    <div class="h-64 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center text-7xl">🎓</div>
+                    <div class="p-8">
+                        <div class="uppercase text-emerald-500 font-semibold text-sm tracking-widest mb-1">Ages 12 – 18</div>
+                        <h3 class="text-2xl font-semibold mb-3">Secondary Section</h3>
+                        <p class="text-slate-600">IGCSE &amp; A-Level preparation. Leadership training, STEM excellence, and global citizenship for tomorrow’s leaders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- VISION & MISSION -->
+        <div id="enrol-section" class="max-w-screen-2xl mx-auto px-5 lg:px-8 grid md:grid-cols-2 gap-8 py-20">
+            <div class="bg-[#1e3a8a] text-white rounded-3xl p-10 flex flex-col">
+                <div class="text-amber-300 text-sm font-semibold tracking-widest">OUR VISION</div>
+                <p class="text-4xl font-medium leading-tight mt-auto">To be the leading bilingual school in Africa, producing innovative thinkers and compassionate leaders.</p>
+            </div>
+            <div class="bg-white border-2 border-[#1e3a8a] rounded-3xl p-10 flex flex-col">
+                <div class="text-[#1e3a8a] text-sm font-semibold tracking-widest">OUR MISSION</div>
+                <p class="text-4xl font-medium leading-tight text-slate-800 mt-auto">To provide a holistic, world-class education that nurtures every child’s unique potential in a safe, loving and inspiring environment.</p>
+            </div>
+        </div>
+        
+        
+        
+        <!-- FOOTER -->
+        <footer class="bg-white py-12 border-t">
+            <div class="max-w-screen-2xl mx-auto px-5 lg:px-8">
+                <div class="flex flex-col lg:flex-row justify-between gap-y-8">
+                    <div class="flex items-center gap-x-3">
+                        <img class="w-9 h-9 rounded-2xl flex items-center justify-center site-logo" src="">
+                        <div class="text-xl font-semibold site-title"></div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-center mt-8 text-xs text-slate-500">© 2026 Eduka. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed top-6 right-6 space-y-3 z-[10000]"></div>
+    
+    <script src="/static/js/functions.js"></script>
+    <script src="/static/js/home.js"></script>
+</body>
+</html>

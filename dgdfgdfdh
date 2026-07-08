@@ -1,0 +1,354 @@
+[33mcommit 9835ca48fa268ac88d171db6ffd0158ae4248319[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: WhizzyDoc <hassanridwan2536@gmail.com>
+Date:   Sun May 17 10:31:15 2026 +0100
+
+    a
+
+[1mdiff --git a/staff/index.html b/staff/index.html[m
+[1mindex a151403..d8514dc 100644[m
+[1m--- a/staff/index.html[m
+[1m+++ b/staff/index.html[m
+[36m@@ -357,9 +357,11 @@[m [m$("#customSidebar").click(function(e) {[m
+                     </div>[m
+                     [m
+                     <div id="topicsSection" class="hidden">[m
+[31m-                      <div class="flex justify-between items-center mb-6">[m
+[32m+[m[32m                      <div class="flex flex-wrap justify-between items-center mb-6">[m
+                         <h2 class="text-xl font-semibold course-tit"></h2>[m
+[31m-                        [m
+[32m+[m[32m                        <button class="gen-topic-btn px-4 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium">[m
+[32m+[m[32m                          <i class="fa fa-star"></i> Generate Topics with AI[m
+[32m+[m[32m                        </button>[m
+                       </div>[m
+                       <div id="topicsGrid" class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">[m
+                         <!-- Populated by JavaScript -->[m
+[36m@@ -408,29 +410,50 @@[m [m$("#customSidebar").click(function(e) {[m
+             <?use-template: "header"?>[m
+             [m
+             <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">[m
+[31m-                <div class="max-w-screen-2xl mx-auto">[m
+[31m-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">[m
+[31m-                        <div>[m
+[31m-                            <h2 class="text-2xl font-semibold">Assigned Classrooms</h2>[m
+[31m-                            <p class="text-slate-500 dark:text-slate-400">Manage your classes and view student lists</p>[m
+[31m-                        </div>[m
+[31m-                        <button onclick="openAddClassroomModal()" [m
+[31m-                                class="px-6 py-3 bg-[#1e3a8a] hover:bg-blue-700 text-white font-medium rounded-2xl flex items-center gap-2">[m
+[31m-                            <span class="text-xl leading-none">+</span> [m
+[31m-                            Assign New Classroom[m
+[31m-                        </button>[m
+[32m+[m[41m                [m
+[32m+[m[32m              <div class="max-w-screen-2xl mx-auto">[m
+[32m+[m[32m                <!-- Tabs -->[m
+[32m+[m[32m                <div class="flex align-center border-b border-slate-200 dark:border-slate-700 mb-8">[m
+[32m+[m[32m                  <button id="tab0" class="tab-active px-8 py-4 text-sm">Classrooms</button>[m
+[32m+[m[32m                  <button class="px-0 py-0 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">&gt;&gt;</button>[m
+[32m+[m[32m                  <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Students</button>[m
+[32m+[m[32m                </div>[m
+[32m+[m
+[32m+[m[32m                <div id="classSection">[m
+[32m+[m[32m                  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">[m
+[32m+[m[32m                    <div>[m
+[32m+[m[32m                        <h2 class="text-2xl font-semibold">Assigned Classrooms</h2>[m
+[32m+[m[32m                        <p class="text-slate-500 dark:text-slate-400">Manage your classes and view student lists</p>[m
+                     </div>[m
+[32m+[m[32m                  </div>[m
+ [m
+[31m-                    <!-- Classrooms Grid -->[m
+[31m-                    <div id="classroomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">[m
+[31m-                        <!-- Populated by JavaScript -->[m
+[32m+[m[32m                  <!-- Classrooms Grid -->[m
+[32m+[m[32m                  <div id="classroomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">[m
+[32m+[m[32m                      <!-- Populated by JavaScript -->[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                </div>[m
+[32m+[m
+[32m+[m[32m                <div id="studentSection" class="hidden">[m
+[32m+[m[32m                  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">[m
+[32m+[m[32m                    <div style="white-space: nowrap;">[m
+[32m+[m[32m                        <h2 class="text-2xl font-semibold"><span class="class-tit"></span> Students</h2>[m
+                     </div>[m
+[32m+[m[32m                    <input type="text" id="studentSearch" placeholder="Search Name, Student ID..."[m[41m [m
+[32m+[m[32m                                   class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">[m
+[32m+[m[32m                  </div>[m
+[32m+[m
+[32m+[m[32m                  <!-- Classrooms Grid -->[m
+[32m+[m[32m                  <div id="studentsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">[m
+[32m+[m[32m                      <!-- Populated by JavaScript -->[m
+[32m+[m[32m                  </div>[m
+                 </div>[m
+[32m+[m[41m                    [m
+[32m+[m[32m              </div>[m
+             </main>[m
+         </div>[m
+     </div>[m
+     [m
+[31m-    <script src="/static/js/classroom.js"></script>[m
+[32m+[m[32m    <script src="/static/js/staff/classroom.js"></script>[m
+     <script>[m
+       $('.class-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')[m
+       $(".page-name").text("Classrooms");[m
+[1mdiff --git a/static/js/functions.js b/static/js/functions.js[m
+[1mindex d6f756c..dce27b0 100644[m
+[1m--- a/static/js/functions.js[m
+[1m+++ b/static/js/functions.js[m
+[36m@@ -169,7 +169,7 @@[m [mfunction downloadFile(url, filename="") {[m
+   document.body.appendChild(link);[m
+   link.click();[m
+   document.body.removeChild(link);[m
+[31m-  pushNotification("n_success", "File downloaded successfully", 4000);[m
+[32m+[m[32m  showToast("File downloaded successfully", "success");[m[41m[m
+ }[m
+ [m
+ function deslugify(str) {[m
+[1mdiff --git a/static/js/staff/classroom.js b/static/js/staff/classroom.js[m
+[1mindex 9aa0cd9..f5893de 100644[m
+[1m--- a/static/js/staff/classroom.js[m
+[1m+++ b/static/js/staff/classroom.js[m
+[36m@@ -1,39 +1,42 @@[m
+ // ==================== SAMPLE DATA ====================[m
+[31m-        var classrooms = [[m
+[31m-            {[m
+[31m-                id: 1,[m
+[31m-                name: "SS2 Mathematics",[m
+[31m-                room: "A12",[m
+[31m-                capacity: 40,[m
+[31m-                students: 38,[m
+[31m-                time: "10:00 AM - 10:45 AM",[m
+[31m-                color: "blue"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: 2,[m
+[31m-                name: "JS1 Basic Mathematics",[m
+[31m-                room: "B05",[m
+[31m-                capacity: 45,[m
+[31m-                students: 42,[m
+[31m-                time: "11:30 AM - 12:15 PM",[m
+[31m-                color: "emerald"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: 3,[m
+[31m-                name: "SS3 Further Mathematics",[m
+[31m-                room: "C08",[m
+[31m-                capacity: 35,[m
+[31m-                students: 29,[m
+[31m-                time: "02:00 PM - 02:45 PM",[m
+[31m-                color: "amber"[m
+[31m-            }[m
+[31m-        ];[m
+[32m+[m[32mvar classrooms = [];[m
+[32m+[m[32mvar currentTab = 0;[m
+[32m+[m[32mvar currentClass = null;[m
+[32m+[m
+ [m
+[32m+[m
+[32m+[m[32masync function getAssignedClassrooms() {[m
+[32m+[m[32m    staff.classroom.getAssignedClassrooms({[m
+[32m+[m[32m        onSuccess: async (data) => {[m
+[32m+[m[32m            checkResponse(data)[m
+[32m+[m[32m            //console.log(data)[m
+[32m+[m[32m            if(data.status == "success") {[m
+[32m+[m[32m                classrooms = data.data[m
+[32m+[m[32m                //showToast('Courses & Subjects loaded successfully', 'success');[m
+[32m+[m[32m                await renderClassrooms()[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else {[m
+[32m+[m[32m                showToast(data.message, "error")[m
+[32m+[m[32m            }[m
+[32m+[m[32m            hideLoader()[m
+[32m+[m[32m        },[m
+[32m+[m[32m        onError: (error) => {[m
+[32m+[m[32m            checkResponse(error)[m
+[32m+[m[32m            showToast(error, "error")[m
+[32m+[m[32m            hideLoader()[m
+[32m+[m[32m        }[m
+[32m+[m[32m    })[m
+[32m+[m[32m}[m
+         // ==================== RENDER CLASSROOMS ====================[m
+[31m-        function renderClassrooms() {[m
+[32m+[m[32m        async function renderClassrooms() {[m
+             const container = $('#classroomsGrid');[m
+             container.empty();[m
+ [m
+[32m+[m[32m            if (classrooms.length === 0) {[m
+[32m+[m[32m                container.html(`<p class="col-span-3 text-center text-slate-500 py-12">No classrooms assigned.</p>`);[m
+[32m+[m[32m                return;[m
+[32m+[m[32m            }[m
+[32m+[m
+             classrooms.forEach(classroom => {[m
+                 const html = `[m
+                     <div class="classroom-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">[m
+[36m@@ -41,25 +44,25 @@[m
+                         <div class="p-6">[m
+                             <div class="flex justify-between">[m
+                                 <div>[m
+[31m-                                    <h3 class="font-semibold text-xl">${classroom.name}</h3>[m
+[31m-                                    <p class="text-slate-500 dark:text-slate-400 mt-1">Room ${classroom.room}</p>[m
+[32m+[m[32m                                    <h3 class="font-semibold text-xl">${classroom.title}</h3>[m
+[32m+[m[32m                                    <p class="text-slate-500 dark:text-slate-400 mt-1">${classroom.category}</p>[m
+                                 </div>[m
+[31m-                                <div class="text-4xl fa fa-building text-amber-900"></div>[m
+[32m+[m[32m                                <div class="text-4xl fa fa-building text-${classroom.color}-900"></div>[m
+                             </div>[m
+ [m
+                             <div class="mt-8 grid grid-cols-2 gap-6">[m
+                                 <div>[m
+                                     <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Students</p>[m
+[31m-                                    <p class="text-4xl font-semibold text-[#1e3a8a] dark:text-blue-400">(${classroom.students}/${classroom.capacity})</p>[m
+[32m+[m[32m                                    <p class="text-3xl font-semibold text-[#1e3a8a] dark:text-blue-400">${classroom.total_students}</p>[m
+                                 </div>[m
+                                 <div>[m
+[31m-                                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Schedule</p>[m
+[31m-                                    <p class="font-medium">${classroom.time}</p>[m
+[32m+[m[32m                                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Males / Females</p>[m
+[32m+[m[32m                                    <p class="text-3xl font-semibold text-[#1e3a8a] dark:text-blue-400">${classroom.males} / ${classroom.females}</p>[m
+                                 </div>[m
+                             </div>[m
+ [m
+                             <div class="mt-8 flex gap-3">[m
+[31m-                                <button onclick="viewClassroomStudents(${classroom.id})" [m
+[32m+[m[32m                                <button onclick="viewStudents(${classroom.id})"[m[41m [m
+                                         class="flex-1 py-4 text-sm font-medium border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl">[m
+                                     View Students[m
+                                 </button>[m
+[36m@@ -76,10 +79,78 @@[m
+         }[m
+ [m
+         // ==================== MODAL FUNCTIONS ====================[m
+[31m-        function viewClassroomStudents(id) {[m
+[32m+[m[32m        function viewStudents(id, search="") {[m
+             const classroom = classrooms.find(c => c.id === id);[m
+             if (!classroom) return;[m
+ [m
+[32m+[m[32m            let container = $('#studentsGrid');[m
+[32m+[m[32m            container.empty();[m
+[32m+[m[32m            let students = classroom.students;[m
+[32m+[m
+[32m+[m[32m            $(".class-tit").html(`${classroom.title}`)[m
+[32m+[m[32m            //console.log(topics)[m
+[32m+[m
+[32m+[m[32m            if (students.length === 0) {[m
+[32m+[m[32m                container.html(`<p class="col-span-3 text-center text-slate-500 py-12">No students found.</p>`);[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else {[m
+[32m+[m[32m                students = students.filter(x => ([m
+[32m+[m[32m                    (x.firstName + x.lastName + x.middleName + x.studentId).toLowerCase().includes(search)[m
+[32m+[m[32m                ))[m
+[32m+[m[32m                students.forEach(student => {[m
+[32m+[m[32m                    const html = `[m
+[32m+[m[32m                        <div class="course-card bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">[m
+[32m+[m[32m                            <div class="h-2 bg-${classroom.color}-600"></div>[m
+[32m+[m[32m                            <div class="p-6">[m
+[32m+[m[32m                                <div class="flex justify-between items-start">[m
+[32m+[m[32m                                    <div>[m
+[32m+[m[32m                                        <h3 class="font-semibold text-xl">${student.firstName}</h3>[m
+[32m+[m[32m                                        <p class="text-slate-500 dark:text-slate-400">${student.middleName} ${student.lastName}</p>[m
+[32m+[m[32m                                    </div>[m
+[32m+[m[32m                                    <img class="w-20 h-20 border border-slate-300 dark:border-slate-600"[m
+[32m+[m[32m                                        style="border-radius:50%"[m[41m [m
+[32m+[m[32m                                        src="${student.image ? `${base_url}${student.image}` : `/static/image/student.png`}" />[m
+[32m+[m[32m                                </div>[m
+[32m+[m[41m                                [m
+[32m+[m[32m                                <div class="mt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 text-sm">[m
+[32m+[m[32m                                    <div>[m
+[32m+[m[32m                                        <p class="text-slate-500 dark:text-slate-400">Student ID</p>[m
+[32m+[m[32m                                        <p class="text-1xl font-semibold text-[#1e3a8a] dark:text-blue-400">${student.studentId}</p>[m
+[32m+[m[32m                                    </div>[m
+[32m+[m[32m                                    <div>[m
+[32m+[m[32m                                        <p class="text-slate-500 dark:text-slate-400">D.O.B</p>[m
+[32m+[m[32m                                        <p class="text-1xl font-semibold text-[#1e3a8a] dark:text-blue-400">${datify(student.dateOfBirth, false)}</p>[m
+[32m+[m[32m                                    </div>[m
+[32m+[m[32m                                </div>[m
+[32m+[m[41m    [m
+[32m+[m[32m                                <div class="mt-6 flex gap-3">[m
+[32m+[m[32m                                    <button onclick="studentInfo(${student.id})"[m[41m [m
+[32m+[m[32m                                            class="flex-1 py-3 text-sm font-medium border border-slate-300 dark:border-slate-600 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800">[m
+[32m+[m[32m                                        View Details[m
+[32m+[m[32m                                    </button>[m
+[32m+[m[32m                                </div>[m
+[32m+[m[32m                            </div>[m
+[32m+[m[32m                        </div>[m
+[32m+[m[32m                    `;[m
+[32m+[m[32m                    container.append(html);[m
+[32m+[m[32m                });[m
+[32m+[m[32m            }[m
+[32m+[m[32m            switchTab(1)[m
+[32m+[m[32m           currentClass = classroom.id[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $("#studentSearch").on('input', function() {[m
+[32m+[m[32m            let query = $(this).val();[m
+[32m+[m[32m            viewStudents(currentClass, query)[m
+[32m+[m[32m        })[m
+[32m+[m
+[32m+[m[32m        function studentInfo(id) {[m
+[32m+[m[32m            const classroom = classrooms.find(c => c.id === currentClass);[m
+[32m+[m[32m            if (!classroom) return;[m
+[32m+[m
+[32m+[m[32m            let students = classroom.students;[m
+[32m+[m[32m            let student = students.find(s => s.id === id);[m
+[32m+[m[32m            console.log(student)[m
+             showModal(`[m
+                 <div class="p-8">[m
+                     <div class="flex justify-between items-center mb-6">[m
+[36m@@ -108,7 +179,7 @@[m
+ [m
+         function takeAttendance(id) {[m
+             const classroom = classrooms.find(c => c.id === id);[m
+[31m-            showToast(`Opening attendance for ${classroom.name}`, 'info');[m
+[32m+[m[32m            showToast(`Opening attendance for ${classroom.title}`, 'info');[m
+             // Redirect to attendance page with pre-selected class[m
+             setTimeout(() => {[m
+                 window.location.href = '#attendance';[m
+[36m@@ -154,29 +225,19 @@[m
+             `);[m
+         }[m
+ [m
+[31m-        function addNewClassroom() {[m
+[31m-            const className = $('#className').val().trim();[m
+[31m-            if (!className) {[m
+[31m-                showToast("Please enter class name", "warning");[m
+[31m-                return;[m
+[31m-            }[m
+[32m+[m[32m        function switchTab(tabIndex) {[m
+[32m+[m[32m            $('.tab-active').removeClass('tab-active');[m
+[32m+[m[32m            $(`#tab${tabIndex}`).addClass('tab-active');[m
+ [m
+[31m-            closeModal();[m
+[31m-            [m
+[31m-            const newClassroom = {[m
+[31m-                id: Date.now(),[m
+[31m-                name: className,[m
+[31m-                room: $('#roomNo').val() || "TBA",[m
+[31m-                capacity: parseInt($('#capacity').val()) || 40,[m
+[31m-                students: 0,[m
+[31m-                time: $('#schedule').val() || "TBA",[m
+[31m-                color: "blue"[m
+[31m-            };[m
+[31m-[m
+[31m-            classrooms.unshift(newClassroom);[m
+[31m-            renderClassrooms();[m
+[31m-            showToast(`Classroom "${className}" assigned successfully!`, "success");[m
+[32m+[m[32m            $('#classSection').toggleClass('hidden', tabIndex !== 0);[m
+[32m+[m[32m            $('#studentSection').toggleClass('hidden', tabIndex !== 1);[m
+[32m+[m[32m            currentTab = tabIndex[m
+         }[m
+[32m+[m
+[32m+[m[32m        $("#tab0").click(function() {[m
+[32m+[m[32m            switchTab(0);[m
+[32m+[m[32m            currentClass = null;[m
+[32m+[m[32m        })[m
+         [m
+         $(document).ready(function() {[m
+             initTailwind();[m
+[36m@@ -184,14 +245,10 @@[m
+             loadTheme()[m
+ [m
+             // Render classrooms[m
+[31m-            renderClassrooms();[m
+[31m-[m
+[31m-            hideLoader();[m
+[31m-[m
+[31m-            // Welcome toast[m
+[31m-            setTimeout(() => {[m
+[31m-                showToast('Classrooms l

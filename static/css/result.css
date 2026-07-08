@@ -1,0 +1,246 @@
+.page-load {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 200000;
+  }
+  .page-load.active {
+    display: flex
+  }
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+  }
+  .loader::before,
+  .loader::after {    
+    content:"";
+    grid-area: 1/1;
+    --c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
+    background: 
+      var(--c) 50%  0, 
+      var(--c) 50%  100%, 
+      var(--c) 100% 50%, 
+      var(--c) 0    50%;
+    background-size: 12px 12px;
+    animation: l12 1s infinite;
+  }
+  .loader::before {
+    margin: 4px;
+    filter: hue-rotate(45deg);
+    background-size: 8px 8px;
+    animation-timing-function: linear
+  }
+  #loader-text {
+    color: #fff;
+  }
+  .download-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 200;
+  }
+  
+  @keyframes l12 { 
+    100%{transform: rotate(.5turn)}
+  }
+
+@page {
+    size: A4 portrait;
+}
+body {
+            background: white;
+            margin: 0;
+            padding: 0;
+}
+
+section {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            width: 100%;
+            max-width: 210mm;
+            height: 297mm !important;
+            margin: 0 auto;
+            padding: 5mm;
+            box-sizing: border-box;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.2);
+}
+@media print {
+    @page {
+                size: A4 portrait;
+    }
+    body {
+                margin: 0;
+                padding: 0;
+    }
+    .download-btn {
+                display: none;
+    }
+    section {
+        margin-top: 20px;
+    }
+}
+        header {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        header img {
+            width: 150px;
+            height: auto;
+        }
+        .school-details {
+            text-align: center;
+            font-size: 9pt;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: 700;
+            color: darkgreen;
+        }
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .student-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .student-info th, .student-info td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+        .orange {
+            background-color: #eee;
+            color: #000;
+        }
+        .photo-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .attendance-class {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .attendance-class table {
+            width: 70%;
+            border-collapse: collapse;
+        }
+        .attendance-class th, .attendance-class td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+        .main-content {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .subjects-table {
+            flex: 7;
+            margin-right: 10px;
+        }
+        .subjects-table th {
+            white-space: nowrap;
+        }
+        .domains {
+            flex: 3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+            font-size: 9pt;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .totals table {
+            width: 50%;
+        }
+        .comments {
+            margin-bottom: 10px;
+        }
+        .comments table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comments th, .comments td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+        .keys {
+            font-size: 9pt;
+        }
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .input-con {
+            margin-bottom: 20px;
+          }
+          .input-con label {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 5px
+          }
+          
+          input:not([type="radio"]),
+          select,
+          textarea {
+            display: inline-block;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            outline: none;
+            background: #fff;
+          }
+          input:not([type="submit"]):focus,
+          textarea:focus,
+          select:focus {
+            border: 1px solid var(--primary-color);
+            background: #fff;
+          }
+          input[type=submit] {
+            background: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+            padding: 10px 50px;
+            width: fit-content;
+          }
+          input[type=submit]:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+          }

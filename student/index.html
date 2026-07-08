@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- template -->
+  
+  <!-- navigation bar -->
+  <template id="sidenav">
+    <div id="customSidebar" class="hidden lg:hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[120] p-0 overflow-y-auto"></div>
+        <div id="sidebar" class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full fixed lg:relative z-[145] transition-transform duration-300 -translate-x-full lg:translate-x-0">
+            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+                <img src="" alt="school_logo" class="site-logo w-10 h-10 rounded-2xl font-bold shadow-inner" />
+                <div>
+                    <span class="site-title text-1xl font-semibold tracking-tight text-[#1e3a8a] dark:text-blue-400"></span>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 -mt-1">Eduka Staff Portal</p>
+                </div>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 overflow-y-auto">
+                <div class="space-y-1">
+                    <a href="#" class="dash-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-tachometer"></span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#courses" class="course-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-book"></span>
+                        <span>Courses &amp; Subjects</span>
+                    </a>
+                    <a href="#classes" class="class-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-building"></span>
+                        <span>Classrooms</span>
+                    </a>
+                    <a href="#attendance" class="att-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-calendar"></span>
+                        <span>Attendance</span>
+                    </a>
+                    <a href="#exams" class="exams-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-file-text"></span>
+                        <span>Exams &amp; Tests</span>
+                    </a>
+                    <a href="#payroll"  class="pay-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-money"></span>
+                        <span>Payroll</span>
+                    </a>
+                    <a href="#profile" class="pro-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-gear"></span>
+                        <span>Profile & Settings</span>
+                    </a>
+                    <a href="#notifications" class="note-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-bell-o"></span>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="#messages" class="mess-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="text-xl fa fa-envelope"></span>
+                        <span>Messages &amp; Events</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+                <a href="#profile" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <div class="w-9 h-9 bg-slate-200 dark:bg-slate-700 rounded-2xl overflow-hidden">
+                        <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <p class="admin-user font-medium text-sm"></p>
+                        <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+       
+    
+    <script src="/static/js/login.js"></script>
+    <script>
+          $('.logout-btn').click(function(e) {
+            e.preventDefault();
+            logout();
+          })
+        showSchoolInfo()
+        
+       
+    $("#customModal").on('click', function(e) {
+        // If clicked on backdrop (not on the modal content itself)
+        if (e.target === this) {
+            //alert("hi")
+            closeModal();
+        }
+    });
+    
+    
+$("#customSidebar").click(function(e) {
+    if(e.target === this) {
+        toggleSidebar()
+    }
+})
+    
+    // Close with Escape key
+    $(document).on('keydown', function(e) {
+        //alert("hi")
+        if (e.key === "Escape") {
+            closeModal();
+        }
+        
+        //var side_btn = 
+        
+        if (e.target === this) {
+            //alert("hi")
+            closeModal();
+        }
+    });
+
+    </script>
+  </template>
+
+  <!-- header -->
+  <template id="header">
+    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 h-16 lg:h-20 flex items-center px-6 z-40">
+                <div class="flex items-center justify-between w-full max-w-screen-2xl mx-auto">
+                    <div class="flex items-center gap-4">
+                        <button onclick="toggleSidebar()" class="side-btn lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <h1 class="page-name text-2xl font-semibold text-[#1e3a8a] dark:text-blue-400 tracking-tight"></h1>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-3xl px-5 py-2 w-80">
+                            <span class="text-slate-400 fa fa-search"></span>
+                            <input type="text" class="bg-transparent border-0 focus:outline-none ml-3 flex-1 text-sm placeholder-slate-400" placeholder="Search students, courses...">
+                        </div>
+
+                        <a href="#notifications" class="relative p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
+                            <span class="text-xl fa fa-bell-o"></span>
+                            <span class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center">3</span>
+                        </a>
+
+                        <button onclick="toggleDarkMode()" id="themeToggle" class="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-xl">
+                            <i class="fa fa-moon-o text-gray"></i>
+                        </button>
+
+                        <div onclick="window.location.href='#profile'" class="flex items-center gap-3 cursor-pointer">
+                            <div class="text-right hidden sm:block">
+                                <p class="admin-user font-semibold text-sm"></p>
+                                <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
+                            </div>
+                            <div class="w-9 h-9 rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-600">
+                                <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+    
+    <script>
+      showUserInfo()
+
+    </script>
+    
+  </template>
+
+
+<template id="dashboard">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <!-- Welcome Banner -->
+                    <div class="welcome-bg rounded-3xl p-8 lg:p-10 text-white mb-8">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <p class="text-blue-100 text-sm font-medium">Good Day,</p>
+                                <h2 class="admin-user text-4xl lg:text-5xl font-semibold tracking-tight"></h2>
+                                <p class="mt-3 text-blue-100 text-lg">Welcome back to your teaching dashboard</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm opacity-75">Today is</div>
+                                <div id="currentDate" class="text-2xl font-semibold"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm">Total Students</p>
+                                    <p class="text-4xl font-semibold mt-2 text-[#1e3a8a] dark:text-blue-400">142</p>
+                                </div>
+                                <div class="text-5xl opacity-80 fa fa-users"></div>
+                            </div>
+                            <div class="mt-4 text-emerald-500 text-sm font-medium flex items-center gap-1">
+                                <i class="fa fa-arrow-up"></i> 12 this week
+                            </div>
+                        </div>
+
+                        <div class="stat-card bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm">Classes Today</p>
+                                    <p class="text-4xl font-semibold mt-2 text-[#1e3a8a] dark:text-blue-400">5</p>
+                                </div>
+                                <div class="text-5xl opacity-80 fa fa-building"></div>
+                            </div>
+                            <div class="mt-4 text-amber-500 text-sm font-medium">Next: SS2 Math at 10:00 AM</div>
+                        </div>
+
+                        <div class="stat-card bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm">Assignments Due</p>
+                                    <p class="text-4xl font-semibold mt-2 text-[#1e3a8a] dark:text-blue-400">8</p>
+                                </div>
+                                <div class="text-5xl opacity-80 fa fa-file-text"></div>
+                            </div>
+                            <div class="mt-4 text-red-500 text-sm font-medium">3 need grading</div>
+                        </div>
+
+                        <div class="stat-card bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm">Attendance Rate</p>
+                                    <p class="text-4xl font-semibold mt-2 text-[#1e3a8a] dark:text-blue-400">94%</p>
+                                </div>
+                                <div class="text-5xl opacity-80 fa fa-calendar"></div>
+                            </div>
+                            <div class="mt-4 text-emerald-500 text-sm font-medium"><i class="fa fa-arrow-up"></i> 2% from last week</div>
+                        </div>
+                    </div>
+
+                    <!-- Two Column Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-7 gap-6">
+                        
+                        <!-- Today's Schedule -->
+                        <div class="lg:col-span-4 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-semibold">Today's Schedule</h3>
+                                <button onclick="markAttendanceQuick()" 
+                                        class="px-5 py-2 bg-[#1e3a8a] hover:bg-blue-700 text-white text-sm font-medium rounded-2xl">
+                                    Mark Attendance
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl">
+                                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-2xl flex items-center justify-center text-2xl fa fa-book"></div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">SS2 Mathematics (Algebra)</p>
+                                        <p class="text-sm text-slate-500">10:00 AM - 10:45 AM • Classroom A12</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 px-3 py-1 rounded-full">In Progress</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl">
+                                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900 rounded-2xl flex items-center justify-center text-2xl fa fa-book"></div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">JS1 Basic Mathematics</p>
+                                        <p class="text-sm text-slate-500">11:30 AM - 12:15 PM • Classroom B05</p>
+                                    </div>
+                                    <div class="text-emerald-500 text-sm font-medium">Upcoming</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions & Recent Activity -->
+                        <div class="lg:col-span-3 space-y-6">
+                            
+                            <!-- Quick Actions -->
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                                <h3 class="font-semibold mb-4">Quick Actions</h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="openNewAssignmentModal()" 
+                                            class="p-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-2xl text-center">
+                                        <div class="text-3xl mb-2 fa fa-file"></div>
+                                        <p class="text-sm font-medium">New Assignment</p>
+                                    </button>
+                                    <button onclick="openNewNoteModal()" 
+                                            class="p-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-2xl text-center">
+                                        <div class="text-3xl mb-2 fa fa-file-text"></div>
+                                        <p class="text-sm font-medium">Class Notes</p>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                                <h3 class="font-semibold mb-4">Recent Activity</h3>
+                                <div class="space-y-5 text-sm">
+                                    <div class="flex gap-3">
+                                        <div class="text-emerald-500 fa fa-check-circle"></div>
+                                        <div>Marked attendance for SS2 Math - 38 students</div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="text-blue-500 fa fa-file-text"></div>
+                                        <div>Graded 12 submissions for JS1 Algebra</div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="text-amber-500 fa fa-book"></div>
+                                        <div>Uploaded new topic: "Quadratic Equations"</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            
+        </div>
+    </div>
+
+
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+      $('.dash-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Dashboard");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="courses">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <!-- Tabs -->
+                    <div class="flex border-b border-slate-200 dark:border-slate-700 mb-8">
+                        <button id="tab0" class="tab-active px-8 py-4 text-sm">My Subjects</button>
+                        <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Syllabus</button>
+                        <button id="tab2" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Topics</button>
+                    </div>
+
+                    <!-- My Subjects Section -->
+                    <div id="subjectsSection">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold">My Subjects (2025/2026 Session)</h2>
+                            <button onclick="openAddSubjectModal()" 
+                                    class="px-6 py-3 bg-[#1e3a8a] hover:bg-blue-700 text-white text-sm font-medium rounded-2xl flex items-center gap-2">
+                                <span>+</span> Add New Subject
+                            </button>
+                        </div>
+
+                        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Syllabus & Topics Sections (Hidden initially) -->
+                    <div id="syllabusSection" class="hidden">
+                        <p class="text-slate-500 dark:text-slate-400 text-center py-20">Syllabus management coming soon...</p>
+                    </div>
+                    
+                    <div id="topicsSection" class="hidden">
+                        <p class="text-slate-500 dark:text-slate-400 text-center py-20">Topics &amp; Class Notes management coming soon...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/subject.js"></script>
+    <script>
+      $('.course-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Subjects");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="classes">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                        <div>
+                            <h2 class="text-2xl font-semibold">Assigned Classrooms</h2>
+                            <p class="text-slate-500 dark:text-slate-400">Manage your classes and view student lists</p>
+                        </div>
+                        <button onclick="openAddClassroomModal()" 
+                                class="px-6 py-3 bg-[#1e3a8a] hover:bg-blue-700 text-white font-medium rounded-2xl flex items-center gap-2">
+                            <span class="text-xl leading-none">+</span> 
+                            Assign New Classroom
+                        </button>
+                    </div>
+
+                    <!-- Classrooms Grid -->
+                    <div id="classroomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/classroom.js"></script>
+    <script>
+      $('.class-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Classrooms");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="attendance">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 mb-8 border border-slate-100 dark:border-slate-700">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <!-- Class Selection -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Class</label>
+                                <select id="classSelect" onchange="loadAttendance()" 
+                                        class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-900">
+                                    <option value="SS2">SS2 Mathematics</option>
+                                    <option value="JS1">JS1 Basic Mathematics</option>
+                                    <option value="SS3">SS3 Further Mathematics</option>
+                                </select>
+                            </div>
+
+                            <!-- Date -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Date</label>
+                                <input type="date" id="attendanceDate" onchange="loadAttendance()" 
+                                       class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-900">
+                            </div>
+
+                            <!-- Term -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Term</label>
+                                <select id="termSelect" onchange="loadAttendance()" 
+                                        class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-900">
+                                    <option value="1">First Term</option>
+                                    <option value="2">Second Term</option>
+                                    <option value="3" selected>Third Term</option>
+                                </select>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex items-end">
+                                <button onclick="markAllPresent()" 
+                                        class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-2xl">
+                                    Mark All Present
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Table -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                            <div>
+                                <h2 class="font-semibold text-lg" id="classTitle">SS2 Mathematics - Attendance</h2>
+                                <p class="text-sm text-slate-500 dark:text-slate-400" id="attendanceDateDisplay"></p>
+                            </div>
+                            <div class="text-sm">
+                                Total Students: <span id="totalStudents" class="font-semibold">38</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+                                        <th class="px-6 py-4 text-left font-medium text-slate-600 dark:text-slate-400">S/N</th>
+                                        <th class="px-6 py-4 text-left font-medium text-slate-600 dark:text-slate-400">Student Name</th>
+                                        <th class="px-6 py-4 text-left font-medium text-slate-600 dark:text-slate-400">Admission No.</th>
+                                        <th class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">Status</th>
+                                        <th class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Summary Stats -->
+                    <div class="grid grid-cols-3 gap-6 mt-8">
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 text-center border border-slate-100 dark:border-slate-700">
+                            <div class="text-4xl font-semibold text-emerald-600" id="presentCount">32</div>
+                            <div class="text-sm text-slate-500 mt-1">Present</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 text-center border border-slate-100 dark:border-slate-700">
+                            <div class="text-4xl font-semibold text-red-600" id="absentCount">4</div>
+                            <div class="text-sm text-slate-500 mt-1">Absent</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 text-center border border-slate-100 dark:border-slate-700">
+                            <div class="text-4xl font-semibold text-amber-600" id="lateCount">2</div>
+                            <div class="text-sm text-slate-500 mt-1">Late</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/attendance.js"></script>
+    <script>
+      $('.att-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Attendance");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="exams">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="flex border-b border-slate-200 dark:border-slate-700 mb-8">
+                        <button id="tab0" class="tab-active px-8 py-4 text-sm">Upcoming Exams</button>
+                        <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Past Exams & Results</button>
+                        <button id="tab2" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Question Bank</button>
+                    </div>
+
+                    <!-- UPCOMING EXAMS -->
+                    <div id="upcomingSection">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold">Upcoming Exams</h2>
+                        </div>
+                        <div id="upcomingExamsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- PAST EXAMS -->
+                    <div id="pastSection" class="hidden">
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+                                <h3 class="font-semibold">Past Exams & Results</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="bg-slate-50 dark:bg-slate-800">
+                                            <th class="px-6 py-4 text-left">Exam Name</th>
+                                            <th class="px-6 py-4 text-left">Subject</th>
+                                            <th class="px-6 py-4 text-left">Class</th>
+                                            <th class="px-6 py-4 text-left">Date</th>
+                                            <th class="px-6 py-4 text-center">Students</th>
+                                            <th class="px-6 py-4 text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pastExamsBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QUESTION BANK -->
+                    <div id="questionBankSection" class="hidden">
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-12 text-center">
+                            <div class="text-7xl mb-6 fa fa-book"></div>
+                            <h3 class="text-2xl font-semibold mb-3">Question Bank</h3>
+                            <p class="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-8">
+                                Create and manage Multiple Choice Questions (MCQ) and Essay questions for all your subjects.
+                            </p>
+                            <button onclick="openQuestionBankModal()" 
+                                    class="px-8 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium hover:bg-blue-700">
+                                Open Question Bank
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/exam.js"></script>
+    <script>
+      $('.exams-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Exams & Tests");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="payroll">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="bg-gradient-to-r from-[#1e3a8a] to-blue-600 text-white rounded-3xl p-8 mb-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                            <div>
+                                <p class="text-blue-100 text-sm font-medium">Current Month Salary</p>
+                                <h2 class="text-5xl font-semibold mt-2">₦485,000</h2>
+                                <p class="text-blue-100 mt-1">March 2026 • Paid on 28th March</p>
+                            </div>
+                            <button onclick="generatePayslip()" 
+                                    class="px-8 py-4 bg-white text-[#1e3a8a] hover:bg-amber-100 font-semibold rounded-2xl flex items-center gap-3">
+                                <span>Download Payslip</span>
+                                <span class="text-xl">↓</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payroll History -->
+                    <div class="mb-6 flex justify-between items-center">
+                        <h3 class="text-xl font-semibold">Payroll History</h3>
+                        <button onclick="openFilterModal()" 
+                                class="text-sm flex items-center gap-2 text-[#1e3a8a] dark:text-blue-400">
+                            <span>Filter</span>
+                            <span class="text-lg">⌾</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Month</th>
+                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Basic Salary</th>
+                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Allowances</th>
+                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Deductions</th>
+                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Net Pay</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Status</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payrollTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Summary -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Total Paid This Year</p>
+                            <p class="text-4xl font-semibold mt-3 text-emerald-600">₦5,820,000</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Average Monthly Pay</p>
+                            <p class="text-4xl font-semibold mt-3">₦485,000</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Next Pay Date</p>
+                            <p class="text-3xl font-semibold mt-3">28 April 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/payroll.js"></script>
+    <script>
+      $('.pay-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Payroll");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="notifications">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="flex gap-2 mb-6 bg-white dark:bg-slate-900 p-2 rounded-3xl w-fit border border-slate-100 dark:border-slate-700">
+                        <button onclick="filterNotifications(0)" id="filter0" class="active-filter px-6 py-2 rounded-3xl text-sm font-medium">All</button>
+                        <button onclick="filterNotifications(1)" id="filter1" class="px-6 py-2 rounded-3xl text-sm font-medium">Unread</button>
+                        <button onclick="filterNotifications(2)" id="filter2" class="px-6 py-2 rounded-3xl text-sm font-medium">Important</button>
+                    </div>
+
+                    <!-- Notifications List -->
+                    <div id="notificationsList" class="space-y-3">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/notification.js"></script>
+    <script>
+      $('.note-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Notifications");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="messages">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="flex border-b border-slate-200 dark:border-slate-700 mb-8">
+                        <button onclick="switchTab(0)" id="tab0" class="tab-active px-8 py-4 text-sm">Events</button>
+                        <button onclick="switchTab(1)" id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Memos &amp; Announcements</button>
+                    </div>
+
+                    <!-- EVENTS SECTION -->
+                    <div id="eventsSection">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold">School Events</h2>
+                            <div class="flex gap-2">
+                                <button onclick="filterEvents('all')" class="event-filter active px-5 py-2 text-sm rounded-3xl">All</button>
+                                <button onclick="filterEvents('upcoming')" class="event-filter px-5 py-2 text-sm rounded-3xl">Upcoming</button>
+                                <button onclick="filterEvents('ongoing')" class="event-filter px-5 py-2 text-sm rounded-3xl">Ongoing</button>
+                                <button onclick="filterEvents('past')" class="event-filter px-5 py-2 text-sm rounded-3xl">Past</button>
+                            </div>
+                        </div>
+
+                        <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- MEMOS SECTION -->
+                    <div id="memosSection" class="hidden">
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
+                            <h3 class="font-semibold mb-6">Memos &amp; Announcements</h3>
+                            <div id="memosList" class="space-y-4">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/message.js"></script>
+    <script>
+      $('.mess-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Messages");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<template id="profile">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-700 mb-8">
+                        <div class="flex flex-col md:flex-row items-center gap-8">
+                            <!-- Avatar -->
+                            <div class="relative">
+                                <div onclick="triggerAvatarUpload()" id="profileAvatarContainer"
+                                     class="profile-avatar w-32 h-32 bg-slate-200 dark:bg-slate-700 rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl cursor-pointer">
+                                    <img id="profileAvatar" src="https://i.pravatar.cc/300?u=teacher" 
+                                         alt="Profile Picture" class="admin-img w-full h-full object-cover">
+                                </div>
+                                <div class="absolute bottom-2 right-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-2xl">
+                                    Active
+                                </div>
+                            </div>
+
+                            <!-- Info -->
+                            <div class="flex-1 text-center md:text-left">
+                                <h2 id="fullName" class="admin-user text-3xl font-semibold"></h2>
+                                <p class="admin-role text-[#1e3a8a] dark:text-blue-400 font-medium mt-1"></p>
+                                <p class="text-slate-500 dark:text-slate-400 mt-4">Staff ID: <span class="admin-id"></span> • Joined: September 2022</p>
+                                
+                                <div class="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
+                                    <div class="bg-slate-100 dark:bg-slate-800 px-5 py-2 rounded-2xl text-sm">
+                                        <i class="fa fa-map-marker text-red-900"></i> Ibadan, Nigeria
+                                    </div>
+                                    <div class="bg-slate-100 dark:bg-slate-800 px-5 py-2 rounded-2xl text-sm">
+                                        <i class="fa fa-envelope text-yellow-900"></i> <span class="admin-email"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Sections -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- Personal Information -->
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                                <i class="fa fa-user text-blue-900"></i> Personal Information
+                            </h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Full Name</label>
+                                    <input type="text" id="nameInput" value="Adebayo Johnson" 
+                                           class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl focus:outline-none focus:border-[#1e3a8a]">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Phone Number</label>
+                                        <input type="tel" value="+234 803 456 7890" 
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Date of Birth</label>
+                                        <input type="date" value="1988-05-15" 
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                </div>
+                                <button onclick="savePersonalInfo()" 
+                                        class="w-full py-4 bg-[#1e3a8a] hover:bg-blue-700 text-white font-medium rounded-2xl">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-xl font-semibold mb-6"><i class="fa fa-lock text-amber-900"></i> Security</h3>
+                            
+                            <div class="space-y-8">
+                                <!-- Password -->
+                                <div>
+                                    <button onclick="openChangePasswordModal()" 
+                                            class="w-full flex items-center justify-between p-5 border border-slate-300 dark:border-slate-600 hover:border-[#1e3a8a] rounded-2xl">
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-2xl fa fa-key text-orange-600"></span>
+                                            <div>
+                                                <p class="font-medium">Change Password</p>
+                                                <p class="text-sm text-slate-500">Last changed 3 months ago</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-[#1e3a8a]">→</span>
+                                    </button>
+                                </div>
+
+                                <!-- 2FA -->
+                                <div class="flex items-center justify-between p-5 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl fa fa-shield text-green-600"></span>
+                                        <div>
+                                            <p class="font-medium">Two-Factor Authentication</p>
+                                            <p class="text-sm text-emerald-600">Enabled</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="twoFactorToggle" checked onchange="toggle2FA()" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                    </label>
+                                </div>
+
+                                <!-- Logout -->
+                                <button onclick="logout()" 
+                                        class="w-full py-4 border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium rounded-2xl">
+                                    Logout from This Devices
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/settings.js"></script>
+    <script>
+      $('.pro-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("Profile");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+<!-- Sample Template -->
+<template id="">
+    <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/static/js/file.js"></script>
+    <script>
+      $('.sample-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+      $(".page-name").text("");
+
+      $('#emp_search').on('input', function(e) {
+        $('#emp_page').val(1);
+        delayedSearch(e.target.value)
+      })
+
+    </script>
+</template>
+
+  <!-- error 404 page -->
+  <template id="404">
+      
+      <div class="flex h-screen overflow-hidden">
+        <?use-template: "sidenav"?>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            <?use-template: "header"?>
+            
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
+                <div class="max-w-screen-2xl mx-auto">
+                    <div class="pusher">
+                        <div class="ui  vertical masthead center aligned segment">
+                          <img src="/static/logos/warning.png" alt="" style="width: 200px; height:auto;">
+                          <h1>Error 404: Page Not Found</h1>
+                          <div class="ui message warning" style="margin:1em;">
+                            <h2 class="header"><?print: hash?></h2>
+                            <p>
+                              This path is either hidden or unavailable at the moment.
+                              <br />
+                            Go back to <a href="/dashboard/">Home</a>
+                          </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+</template>
+
+<!-- Routes -->
+<!-- homepage -->
+<template route="/">
+  <?use-template: "dashboard"?>
+</template>
+<template route="/courses">
+  <?use-template: "courses"?>
+</template>
+<template route="/classes">
+  <?use-template: "classes"?>
+</template>
+<template route="/exams">
+  <?use-template: "exams"?>
+</template>
+<template route="/attendance">
+  <?use-template: "attendance"?>
+</template>
+<template route="/payroll">
+  <?use-template: "payroll"?>
+</template>
+<template route="/messages">
+  <?use-template: "messages"?>
+</template>
+<template route="/profile">
+  <?use-template: "profile"?>
+</template>
+<template route="/notifications">
+  <?use-template: "notifications"?>
+</template>
+
+<!-- Standard Meta -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- Site Properties -->
+<title></title>
+<link rel="shortcut icon" href="/static/logos/icon.png" />
+    <link rel="shortcut" href="/static/logos/icon.png" />
+    
+<link rel="stylesheet" type="text/css" href="/static/css/fontawesome.css">
+<link rel="stylesheet" type="text/css" href="/static/css/rigan.css">
+<link rel="stylesheet" type="text/css" href="/static/css/dashboard.css">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/marked.min.js"></script>
+    <script src="/static/module/swif.js"></script>
+    <script src="/static/js/tailwind.min.js"></script>
+    <script src="/static/tinymce/tinymce.min.js"></script>
+    <script src="https://api.eduka.ng/static/sdk/educa-sdk.js"></script>
+    
+                                             
+<script src="/static/js/apexcharts.js"></script>                                      
+
+<script>
+var on = XJSX.event.on,
+emit = XJSX.event.emit;
+emit("hashchange");
+</script>
+
+<style type="text/css">
+
+</style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans">
+    
+            
+<!-- CUSTOM MODAL - FULL SCREEN BACKDROP + CENTERED CONTENT -->
+<div id="customModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[999] flex items-center justify-center p-4 overflow-y-auto">
+    <div id="modalContent" 
+         class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-lg mx-auto my-auto modal-content">
+        <!-- Content injected dynamically via JavaScript -->
+    </div>
+</div>
+    
+    <!-- FULL SCREEN LOADER -->
+    <div id="fullLoader" class="hidden fixed inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-[#1e3a8a] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="mt-6 text-lg font-medium text-slate-600 dark:text-slate-400">Loading...</p>
+        </div>
+    </div>
+    
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed top-6 right-6 space-y-3 z-[10000]"></div>
+   
+
+  <script src="/static/js/functions.js"></script>
+
+<?on: "hashchange"?>
+
+<?eval:
+"var hash=location.hash
+hash=hash.replace(/^\/?#\/?|^/img,'/')
+var page=document.querySelector(`template[route='${hash}']`)||'404';"?>
+
+<?use-template: page?>
+<?end?>
+
+</body>
+</html>                                                                                                                                               
