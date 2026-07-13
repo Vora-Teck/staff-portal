@@ -5,7 +5,7 @@ function loadResult() {
     let result = getQueryParams();
     //console.log(result)
     if(!result.type) {
-        pushNotification('n_error', 'Invalid parameters', 5000);
+        showToast('Invalid parameters', "error");
         $("main").html(`<h3>Invalid parameters</h3>`)
         hideLoader()
         return;
@@ -15,13 +15,13 @@ function loadResult() {
 
     if(result.type === "single") {
         if(!result.doc_id) {
-            pushNotification('n_error', 'Result parameter not provided', 5000);
+            showToast('Result parameter not provided', "error");
             $("main").html(`<h3>Result parameter not provided</h3>`)
             hideLoader()
             return;
         }
         let result_id = result.doc_id
-        admin.result.studentResult({
+        staff.result.studentResult({
             params: {result_id},
             onSuccess: (data) => {
                     //console.log(data)
@@ -386,21 +386,21 @@ function loadResult() {
                         })
                     }
                     else {
-                        pushNotification("n_error", data.message, 3000)
+                        showToast(data.message, "error")
                         $("main").html(`<h3>${data.message}</h3>`)
                     }
                     hideLoader()
             },
             onError: (error) => {
                 console.error(error)
-                pushNotification("n_error", "Error occurred. Kindly check your internet connection", 3000)
+                showToast("Error occurred. Kindly check your internet connection", "error");
                 hideLoader()
             }
         })
     }
     else if(result.type === "bulk") {
         if(!result.class_id || !result.term_id) {
-            pushNotification('n_error', 'Result parameter not provided', 5000);
+            showToast('Result parameter not provided', "error");
             $("main").html(`<h3>Result parameter not provided</h3>`)
             hideLoader()
             return;
@@ -408,7 +408,7 @@ function loadResult() {
         let class_id = result.class_id;
         let term_id = result.term_id;
 
-        admin.result.classResult({
+        staff.result.classResult({
             params: {class_id, term_id},
             onSuccess: (data) => {
                 //console.log(data)
@@ -785,20 +785,20 @@ function loadResult() {
                     }
                 }
                 else {
-                    pushNotification("n_error", data.message, 3000)
+                    showToast(data.message, "error")
                     $("main").html(`<h3>${data.message}</h3>`)
                 }
                 hideLoader()
             },
             onError: (error) => {
                 console.error(error)
-                pushNotification("n_error", "Error occurred. Kindly check your internet connection", 3000)
+                showToast("Error occurred. Kindly check your internet connection", "error");
                 hideLoader()
             }
         })
     }
     else {
-        pushNotification('n_error', 'Invalid parameters', 5000);
+        showToast('Invalid parameters', "error");
         $("main").html(`<h3>Invalid parameters</h3>`)
         hideLoader()
         return;
@@ -858,22 +858,22 @@ function updateResult(result_id) {
     //console.log(formData)
     showLoader("Updating Result...")
 
-    admin.result.updateResult({
+    staff.result.updateResult({
         formData: formData,
         onSuccess: (data) => {
             //console.log(data)
             if(data.status == "success") {
-                pushNotification("n_success", data.message, 5000);
+                showToast(data.message, "success");
                 loadResult()
             }
             else {
-                pushNotification("n_error", data.message, 3000)
+                showToast(data.message, "error")
             }
             hideLoader()
         },
         onError: (error) => {
             console.error(error);
-            pushNotification("n_network", "Error occurred. Kindly check your internet connection", 3000)
+            showToast("Error occurred. Kindly check your internet connection", "error")
             hideLoader()
         }
     })

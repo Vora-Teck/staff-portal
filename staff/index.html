@@ -23,7 +23,7 @@
                     </a>
                     <a href="#courses" class="course-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
                         <span class="text-xl fa fa-book"></span>
-                        <span>Courses &amp; Subjects</span>
+                        <span>Subjects &amp; Notes</span>
                     </a>
                     <a href="#classes" class="class-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
                         <span class="text-xl fa fa-building"></span>
@@ -604,11 +604,58 @@ $("#customSidebar").click(function(e) {
 
                     <!-- Score Sheet -->
                     <div id="upcomingSection">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl font-semibold">Score Sheet</h2>
-                        </div>
-                        <div id="upcomingExamsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Populated by JavaScript -->
+                        <div id="score-table" class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center flex-wrap gap-6">
+                                <h3 class="font-semibold">Score Sheet</h3>
+                                <div class="sheet-btns w-flex w-flex-start w-align-center" style="gap:15px;width:fit-content;"></div>
+                                
+                            </div>
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center flex-wrap gap-6">
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Class</label>
+                                    <select id="class-filter" 
+                                            class="att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        
+                                    </select>
+                                </div>
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Subject</label>
+                                    <select id="subject-filter" 
+                                            class="att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        
+                                    </select>
+                                </div>
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Term</label>
+                                    <select id="term-filter2" 
+                                            class="term-filter att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="bg-slate-50 dark:bg-slate-800">
+                                            <th class="px-6 py-4 text-left">Image</th>
+                                            <th class="px-6 py-4 text-left">Student Name</th>
+                                            <th class="px-6 py-4 text-left">Student ID</th>
+                                            <th class="px-6 py-4 text-left">Test (<span class="test_per">0%</span>)</th>
+                                            <th class="px-6 py-4 text-center">Exam (<span class="exam_per">0%</span>)</th>
+                                            <th class="px-6 py-4 text-center">Average</th>
+                                            <th class="px-6 py-4 text-center">Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="scoreSheetBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                                            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                                                Select a classroom and subject to continue
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
@@ -629,7 +676,7 @@ $("#customSidebar").click(function(e) {
                                 <div class="flex justify-end items-center gap-2">
                                     <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Term</label>
                                     <select id="term-filter" 
-                                            class="att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                            class="term-filter att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
                                         
                                     </select>
                                 </div>
@@ -719,16 +766,59 @@ $("#customSidebar").click(function(e) {
 
                     <!-- QUESTION BANK -->
                     <div id="questionBankSection" class="hidden">
-                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-12 text-center">
-                            <div class="text-7xl mb-6 fa fa-book"></div>
-                            <h3 class="text-2xl font-semibold mb-3">Question Bank</h3>
-                            <p class="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-8">
-                                Create and manage Multiple Choice Questions (MCQ) and Essay questions for all your subjects.
-                            </p>
-                            <button onclick="openQuestionBankModal()" 
-                                    class="px-8 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium hover:bg-blue-700">
-                                Open Question Bank
-                            </button>
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center flex-wrap gap-6">
+                                <h3 class="font-semibold">Students' Results</h3>
+                                
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Actions</label>
+                                    <select id="result-action" 
+                                            class="att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        <option value="">--- ---</option>
+                                        <option value="view">View Class Students' Results -- per class / term</option>
+                                        <option value="bulk">Generate Class Students' Results PDF -- per class / term</option>
+                                    </select>
+                                    <button id="result-action-btn" class="flex-1 py-3 px-4 bg-[#1e3a8a] text-white rounded-2xl font-medium">Go</button>
+                                </div>
+                            </div>
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center flex-wrap gap-6">
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Term</label>
+                                    <select id="term-filter3" 
+                                            class="term-filter att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        
+                                    </select>
+                                </div>
+                                <div class="flex justify-end items-center gap-2">
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2" style="white-space: nowrap;">Assigned Class(es)</label>
+                                    <select id="class-filter2" 
+                                            class="att-params w-full px-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="bg-slate-50 dark:bg-slate-800">
+                                            <th class="px-6 py-4 text-center">Image</th>
+                                            <th class="px-6 py-4 text-left">Student Name</th>
+                                            <th class="px-6 py-4 text-center">Classroom</th>
+                                            <th class="px-6 py-4 text-center">Avg. Score</th>
+                                            <th class="px-6 py-4 text-center">Grade</th>
+                                            <th class="px-6 py-4 text-center">Position</th>
+                                            <th class="px-6 py-4 text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resultBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                                            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                                                Select a classroom and/or term to continue
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -762,12 +852,11 @@ $("#customSidebar").click(function(e) {
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                             <div>
                                 <p class="text-blue-100 text-sm font-medium">Current Month Salary</p>
-                                <h2 class="text-5xl font-semibold mt-2">₦485,000</h2>
-                                <p class="text-blue-100 mt-1">March 2026 • Paid on 28th March</p>
+                                <h2 class="text-5xl font-semibold mt-2 curr_pay">Not Available</h2>
+                                <p class="text-blue-100 mt-1"><span class="curr_month"></span><span class="curr_date"></span></p>
                             </div>
-                            <button onclick="generatePayslip()" 
-                                    class="px-8 py-4 bg-white text-[#1e3a8a] hover:bg-amber-100 font-semibold rounded-2xl flex items-center gap-3">
-                                <span>Download Payslip</span>
+                            <button data-id="" class="hidden curr_btn px-8 py-4 bg-white text-[#1e3a8a] hover:bg-amber-100 font-semibold rounded-2xl flex items-center gap-3">
+                                <span>Download Receipt</span>
                                 <span class="text-xl">↓</span>
                             </button>
                         </div>
@@ -776,11 +865,6 @@ $("#customSidebar").click(function(e) {
                     <!-- Payroll History -->
                     <div class="mb-6 flex justify-between items-center">
                         <h3 class="text-xl font-semibold">Payroll History</h3>
-                        <button onclick="openFilterModal()" 
-                                class="text-sm flex items-center gap-2 text-[#1e3a8a] dark:text-blue-400">
-                            <span>Filter</span>
-                            <span class="text-lg">⌾</span>
-                        </button>
                     </div>
 
                     <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
@@ -789,10 +873,10 @@ $("#customSidebar").click(function(e) {
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
                                         <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Month</th>
-                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Basic Salary</th>
-                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Allowances</th>
-                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Deductions</th>
-                                        <th class="px-6 py-5 text-left font-medium text-slate-600 dark:text-slate-400">Net Pay</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Basic Salary</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Allowances</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Deductions</th>
+                                        <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Net Pay</th>
                                         <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Status</th>
                                         <th class="px-6 py-5 text-center font-medium text-slate-600 dark:text-slate-400">Action</th>
                                     </tr>
@@ -808,15 +892,15 @@ $("#customSidebar").click(function(e) {
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                         <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
                             <p class="text-slate-500 dark:text-slate-400 text-sm">Total Paid This Year</p>
-                            <p class="text-4xl font-semibold mt-3 text-emerald-600">₦5,820,000</p>
+                            <p class="text-4xl font-semibold mt-3 text-emerald-600 pay-year">₦0</p>
                         </div>
                         <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
                             <p class="text-slate-500 dark:text-slate-400 text-sm">Average Monthly Pay</p>
-                            <p class="text-4xl font-semibold mt-3">₦485,000</p>
+                            <p class="text-4xl font-semibold mt-3 pay-avg">₦0</p>
                         </div>
                         <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-700">
                             <p class="text-slate-500 dark:text-slate-400 text-sm">Next Pay Date</p>
-                            <p class="text-3xl font-semibold mt-3">28 April 2026</p>
+                            <p class="text-3xl font-semibold mt-3 pay-date">N/A</p>
                         </div>
                     </div>
                 </div>
@@ -962,9 +1046,7 @@ $("#customSidebar").click(function(e) {
                                 <p class="text-slate-500 dark:text-slate-400 mt-4">Staff ID: <span class="admin-id"></span> • Joined: September 2022</p>
                                 
                                 <div class="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
-                                    <div class="bg-slate-100 dark:bg-slate-800 px-5 py-2 rounded-2xl text-sm">
-                                        <i class="fa fa-map-marker text-red-900"></i> Ibadan, Nigeria
-                                    </div>
+                                    
                                     <div class="bg-slate-100 dark:bg-slate-800 px-5 py-2 rounded-2xl text-sm">
                                         <i class="fa fa-envelope text-yellow-900"></i> <span class="admin-email"></span>
                                     </div>
@@ -984,18 +1066,18 @@ $("#customSidebar").click(function(e) {
                             <div class="space-y-6">
                                 <div>
                                     <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Full Name</label>
-                                    <input type="text" id="nameInput" value="Adebayo Johnson" 
+                                    <input type="text" id="nameInput" value="" 
                                            class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl focus:outline-none focus:border-[#1e3a8a]">
                                 </div>
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Phone Number</label>
-                                        <input type="tel" value="+234 803 456 7890" 
+                                        <input type="tel" value="" 
                                                class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Date of Birth</label>
-                                        <input type="date" value="1988-05-15" 
+                                        <input type="date" value="" 
                                                class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
                                     </div>
                                 </div>
@@ -1057,7 +1139,7 @@ $("#customSidebar").click(function(e) {
     <script src="/static/js/staff/settings.js"></script>
     <script>
       $('.pro-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
-      $(".page-name").text("Profile");
+      $(".page-name").text("Profile & Settings");
 
       $('#emp_search').on('input', function(e) {
         $('#emp_page').val(1);

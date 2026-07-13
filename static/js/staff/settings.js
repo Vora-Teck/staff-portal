@@ -90,9 +90,4 @@ function triggerAvatarUpload() {
 
             hideLoader();
 
-            setTimeout(() => {
-                showToast('Profile loaded successfully', 'success');
-            }, 600);
-
-            
         });

@@ -105,7 +105,7 @@ section {
             width: 100%;
         }
 
-        h1 {
+        .school-details h1 {
             margin: 0;
             font-size: 18pt;
             font-weight: 700;

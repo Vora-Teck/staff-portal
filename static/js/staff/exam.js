@@ -3,7 +3,7 @@ var exams = [];
 var currentExam = null;
 
 async function getTerms() {
-    $("#term-filter").empty()
+    $(".term-filter").empty()
     staff.school.getTerms({
         onSuccess: async (data) => {
             checkResponse(data)
@@ -13,9 +13,10 @@ async function getTerms() {
                 for(let i in d) {
                     let temp = `
                     <option value="${d[i].id}">${d[i].title} - ${d[i].session.title}</option>`;
-                    $("#term-filter").append(temp)
+                    $(".term-filter").append(temp)
                 }
                 getAssignedExams()
+                getAssignedClassrooms()
             }
             else {
                 showToast(data.message, "error")
@@ -30,6 +31,11 @@ async function getTerms() {
 
 $("#term-filter").on('change', renderExams)
 $("#type-filter").on('change', renderExams)
+$("#term-filter2").on('change', getScoreSheet)
+$("#subject-filter").on('change', getScoreSheet)
+$("#class-filter").on('change', getScoreSheet)
+$("#class-filter2").on('change', getResults)
+$("#term-filter3").on('change', getResults)
 
 async function getAssignedExams() {
     staff.exam.getAssignedExams({
@@ -40,6 +46,7 @@ async function getAssignedExams() {
                 exams = data.data
                 //showToast('Courses & Subjects loaded successfully', 'success');
                 await renderExams()
+                await showScoresData();
             }
             else {
                 showToast(data.message, "error")
@@ -50,6 +57,177 @@ async function getAssignedExams() {
             checkResponse(error)
             showToast(error, "error")
             hideLoader()
+        }
+    })
+}
+
+async function getAssignedClassrooms() {
+    $("#class-filter2").empty()
+    $("#class-filter2").append(`<option value="" selected>Select Classroom</option>`)
+    staff.classroom.getAssignedClassrooms({
+        onSuccess: async (data) => {
+            checkResponse(data)
+            //console.log(data)
+            if(data.status == "success") {
+                let d = data.data
+                for(let i in d) {
+                    let temp = `
+                    <option value="${d[i].id}">${d[i].title}</option>`;
+                    $("#class-filter2").append(temp)
+                }
+            }
+            else {
+                showToast(data.message, "error")
+            }
+        },
+        onError: (error) => {
+            checkResponse(error)
+            showToast(error, "error")
+        }
+    })
+}
+
+async function showScoresData() {
+    let subs = {};
+    let clas = {};
+
+    for(let i in exams) {
+        let e = exams[i]
+        subs[e.course.id] = e.course.title;
+        for(let j in e.classrooms) {
+            let f = e.classrooms[j];
+            clas[f.id] = f.level.title
+        }
+    }
+    $("#subject-filter").empty();
+    $("#class-filter").empty();
+    for(let i in subs) {
+        let temp = `<option value="${i}">${subs[i]}</option>`;
+        $("#subject-filter").append(temp)
+    }
+    $("#subject-filter").prepend(`<option value="" selected>Select Subject</option>`)
+    for(let i in clas) {
+        let temp = `<option value="${i}">${clas[i]}</option>`;
+        $("#class-filter").append(temp)
+    }
+    $("#class-filter").prepend(`<option value="" selected>Select Classroom</option>`)
+    
+}
+
+function getScoreSheet() {
+    let class_id = $("#class-filter").val();
+    let subject_id = $("#subject-filter").val()
+    let term_id = $("#term-filter2").val()
+
+    $('#scoreSheetBody').empty()
+    $(".sheet-btns").empty()
+    $(".test_per").html(`0%`)
+    $(".exam_per").html(`0%`)
+
+    if(class_id.trim() === "" || subject_id.trim() === "") {
+        loader = `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                Select a classroom and subject to continue
+            </td>                          
+        </tr>`;
+        $('#scoreSheetBody').append(loader)
+        return
+    }
+    
+    loader = `
+    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+        <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+            <i class="fa fa-spinner rotate"></i>&nbsp;&nbsp;&nbsp;Processing...
+        </td>                          
+    </tr>`;
+    $('#scoreSheetBody').append(loader)
+
+    let params = {class_id, term_id, subject_id}
+
+    console.log(params)
+
+    staff.exam.scoreSheet({
+        params: params,
+        onSuccess: (data) => {
+            console.log(data);
+            $('#scoreSheetBody').empty()
+            if(data.status == 'success') {
+                let e = data.data;
+                let s = e.scores;
+
+                $(".test_per").html(`${e.test_percentage}%`)
+                $(".exam_per").html(`${e.exam_percentage}%`)
+
+                if(e.test_id) {
+                    $(".sheet-btns").append(`
+                    <button 
+                    class="px-5 py-3 bg-[#1e3a8a] text-white rounded-2xl font-medium hover:bg-blue-700" 
+                    data-id="${e.test_id}">
+                        Test Scores&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>
+                    </button>
+                    `)
+                }
+                if(e.exam_id) {
+                    $(".sheet-btns").append(`
+                    <button 
+                    class="px-5 py-3 bg-[#1e3a8a] text-white rounded-2xl font-medium hover:bg-blue-700" 
+                    data-id="${e.exam_id}">
+                        Exam Scores&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>
+                    </button>
+                    `)
+                }
+                
+                if(s.length > 0) {
+                    for(var i in s) {
+                        let temp = `
+                            <tr 
+                            class="hover:bg-slate-50 dark:hover:bg-slate-800" 
+                            data-name="${s[i].name.toLowerCase()} ${s[i].studentId.toLowerCase()}">
+                                <td class="px-6 py-5 text-left text-slate-500">
+                                    <img style="width:40px; height:40px; border-radius:50%" 
+                                    src="${s[i].image || '/static/image/avatar.png'}" />
+                                </td>
+                                <td class="px-6 py-5 text-left text-slate-500">${s[i].name}</td>
+                                <td class="px-6 py-5 text-left text-slate-500">${s[i].studentId}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${s[i].test}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${s[i].exam}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${s[i].average}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${s[i].grade || 'N/A'}</td>
+                            </tr>`;
+                        $('#scoreSheetBody').append(temp)
+                    }
+                }
+                else {
+                    let temp = `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                                No score sheet found for this exam.
+                            </td>                          
+                        </tr>`;
+                    $('#scoreSheetBody').append(temp) 
+                }
+
+                $(".sheet-btns button").on('click', function(e) {
+                    e.preventDefault();
+                    let id = $(this).data('id');
+                    viewScores(id)
+                })
+            }
+            else {
+                let temp = `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                        <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                            ${data.message}
+                        </td>                          
+                    </tr>`;
+                $('#scoreSheetBody').append(temp)
+            }
+        },
+        onError: (error) => {
+                console.error(error);
+                $('#scoreSheetBody').empty()
+                showToast("Error occurred. Kindly check your internet connection", "error")
         }
     })
 }
@@ -347,7 +525,7 @@ function viewQuestions(exam_id) {
                                     <div class="border-t border-gray-800"></div>
                             
                                     <a href="#" data-id="${que.number}"
-                                        class="que-del-btn acc-del-btn flex items-center gap-3 px-4 py-3 text-sm text-red-400 transition hover:bg-red-500/10 hover:text-slate-300">
+                                        class="que-del-btn flex items-center gap-3 px-4 py-3 text-sm text-red-400 transition hover:bg-red-500/10 hover:text-slate-300">
                                         <span class="fa fa-trash"></span>
                                         Delete Question
                                     </a>
@@ -375,6 +553,7 @@ function viewQuestions(exam_id) {
                     $(".que-del-btn").click(function(e) {
                         e.preventDefault()
                         let q_no = $(this).data('id');
+                        confirmDeleteQuestion(q_no, exam_id)
                     })
                     initiateTiny(true)
                 }
@@ -573,40 +752,109 @@ $(".add-que-btn").click(function() {
 })
 
 function getQuestion(q_no, exam_id) {
-    //showLoader("Processing...")
-
-    //$(".opts-selected").empty();
-    //$("#que-ans2").empty();
-    //$(".update-que-form")[0].reset();
+    showLoader("Processing...")
 
     var que = global_mcq_questions.find(q => q.number == q_no)
-    console.log(que)
+    //console.log(que)
     //$(".q_nos").html(que.number);
     //$(".q_no").val(que.number);
 
-    if(action == "update") {
-        $("#que-que2").val(que.question);
+    showModal(`
+                <div class="p-8">
+                    <h3 class="text-2xl font-semibold mb-6">
+                        Update Question ${que.number}
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium mt-3 mb-1.5">Question</label>
+                            <textarea rows="3" id="que-que" class="w-full px-5 py-4 border text-black-700 border-slate-300 dark:border-slate-600 rounded-2xl">${que.question}</textarea>
 
-        que.options.map((elem) => {
-            let temp = `<option value="${elem}">${elem}</option>`;
+                            <label class="block text-sm font-medium mb-1.5">Add Options</label>
+                            <div class="flex justify-end items-center gap-3">
+                                <input type="text" id="que-opt" class="w-full px-5 py-4 border text-black-700 border-slate-300 dark:border-slate-600 rounded-2xl" />
+                                <button class="add-opt-btn px-4 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium" style="white-space:nowrap;">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
+                            </div>
+                            
+                            <div class="opts-selected">
+                                ${que.options.map((item, index) => {
+                                    return `<div class="opt-selected light-btn">
+                                        <span class="opt-opt">${item}</span>
+                                        <span class="opt-canc">X</span>
+                                    </div>`
+                                })}
+                            </div>
 
-            let temp2 = `
-                <div class="opt-selected2 light-btn">
-                    <span class="opt-opt2">${elem}</span>
-                    <span class="opt-canc2">X</span>
-                </div>`;
+                            <label class="block text-sm font-medium mb-1.5">Select Answer</label>
+                            <select id="que-ans" class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                ${que.options.map((item, index) => {
+                                    return `<option value="${item}" ${item == que.answer ? 'selected': ''}>${item}</option>`
+                                }).join('')}
+                            </select>
+                            
+                        </div>
+                        <div class="flex gap-3 pt-4">
+                            <button onclick="closeModal()" class="flex-1 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl font-medium">Cancel</button>
+                            <button id="update-que-btn" class="flex-1 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium">Update</button>
+                        </div>
+                    </div>
+                </div>
+    `);
 
-            $(".opts-selected2").append(temp2)
-            $("#que-ans2").append(temp)
-        })
+    $("#update-que-btn").on('click', () => {
+        updateQuestion(exam_id, que.number)
+    })
 
-        $("#que-ans2").val(que.answer)
+    $(".add-opt-btn").on('click', addOption)
 
-        $(".opt-canc2").on('click', function() {
-            $(this).parent('.opt-selected2').remove()
-            updateOptions2()
-        })
-    }
+    $(`#que-opt`).on('keydown', function(e) {
+        if(e.key === "Enter") {
+            e.preventDefault();
+            addOption()
+            return;
+        }
+    })
+
+    $(".opt-canc").on('click', function() {
+            $(this).parent('.opt-selected').remove()
+            updateOptions()
+    })
+
+    hideLoader()
+            
+}
+
+function confirmDeleteQuestion(q_no, exam_id) {
+    showLoader("Processing...")
+
+    var que = global_mcq_questions.find(q => q.number == q_no)
+    //console.log(que)
+    //$(".q_nos").html(que.number);
+    //$(".q_no").val(que.number);
+
+    showModal(`
+                <div class="p-8">
+                    <h3 class="text-2xl font-semibold mb-6">
+                        Delete Question ${que.number}
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        <h4>Are you sure you want to delete question ${q_no}?<h4>
+                        <h4>This action is permanent and cannot be reversed</h4>
+                            
+                        <div class="flex gap-3 pt-4">
+                            <button onclick="closeModal()" class="flex-1 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl font-medium">Cancel</button>
+                            <button id="delete-que-btn" class="flex-1 py-4 bg-red-700 text-white rounded-2xl font-medium">Delete</button>
+                        </div>
+                    </div>
+                </div>
+    `);
+
+    $("#delete-que-btn").on('click', () => {
+        deleteQuestion(exam_id, que.number)
+    })
 
     hideLoader()
             
@@ -659,6 +907,80 @@ function addQuestion(exam_id) {
         formData: formData,
         onSuccess: (data) => {
             //console.log(data)
+            checkResponse(data)
+            if(data.status == "success") {
+                showToast(data.message, "success");
+                //getQuestions(exam_id)
+                closeModal()
+                viewQuestions(exam_id)
+                getAssignedExams()
+            }
+            else {
+                showToast(data.message, "error");
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            console.error(error);
+            showToast(`Error occurred: ${error}`, "error");
+            hideLoader()
+        }
+    })
+}
+
+function updateQuestion(exam_id, question_number) {
+    let question = $("#que-que").val();
+
+    let options = []
+    $(".opt-opt").each((index, elem) => {
+        options.push($(elem).text());
+    })
+    let answer = $("#que-ans").val()
+
+    let formData = {exam_id, question_number, question, answer, options}
+
+
+    //console.log(formData)
+    showLoader(`Updating Question ${question_number}...`)
+
+    staff.exam.updateExamQuestion({
+        formData: formData,
+        onSuccess: (data) => {
+            //console.log(data)
+            checkResponse(data)
+            if(data.status == "success") {
+                showToast(data.message, "success");
+                //getQuestions(exam_id)
+                //closeModal()
+                viewQuestions(exam_id)
+                getAssignedExams()
+            }
+            else {
+                showToast(data.message, "error");
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            console.error(error);
+            showToast(`Error occurred: ${error}`, "error");
+            hideLoader()
+        }
+    })
+}
+
+function deleteQuestion(exam_id, question_number) {
+
+    let formData = {exam_id, question_number}
+
+
+    //console.log(formData)
+    showLoader(`Deleting Question ${question_number}...`)
+
+    staff.exam.deleteExamQuestion({
+        formData: formData,
+        onSuccess: (data) => {
+            //console.log(data)
+            checkResponse(data)
             if(data.status == "success") {
                 showToast(data.message, "success");
                 //getQuestions(exam_id)
@@ -693,6 +1015,7 @@ function generateQuestions(exam_id) {
         formData: formData,
         onSuccess: (data) => {
             //console.log(data)
+            checkResponse(data)
             if(data.status == "success") {
                 showToast(data.message, "success");
                 //getQuestions(exam_id)
@@ -724,7 +1047,8 @@ function generateEssay(exam_id) {
     staff.exam.generateExamEssay({
         formData: formData,
         onSuccess: (data) => {
-            console.log(data)
+            //console.log(data)
+            checkResponse(data)
             if(data.status == "success") {
                 showToast(data.message, "success");
                 //getQuestions(exam_id)
@@ -748,6 +1072,245 @@ function generateEssay(exam_id) {
     })
 }
 
+
+/* =========== Result Section =============== */
+function getResults() {
+    let class_id = $("#class-filter2").val().trim();
+    let term_id = $("#term-filter3").val().trim();
+
+    $('#resultBody').empty()
+
+    if(class_id === "" || term_id === "") {
+        $('#resultBody').append(`
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                    Select a classroom and/or term to continue
+                </td>                
+            </tr>    
+        `)
+        return
+    }
+
+    $('#resultBody').append(`
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                <i class="fa fa-spinner rotate"></i>&nbsp;&nbsp;&nbsp;Processing...
+            </td>                
+        </tr>    
+    `)
+
+    let params = {class_id, term_id}
+
+    //console.log(params)
+
+    staff.result.getResults({
+        params: params,
+        onSuccess: (data) => {
+                //console.log(data);
+                $('#resultBody').empty()
+                if(data.status == 'success') {
+                    if(data.data) {
+                        let d = data.data;
+                        
+                        for(var i in d) {
+                            let temp = `
+                            <tr 
+                            class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                                <td class="px-6 py-5 text-center text-slate-500">
+                                    <img style="width:40px; height:40px; border-radius:50%" 
+                                    src="${d[i].student.image ? `${base_url}${d[i].student.image}` : `/static/image/avatar.png`}" />
+                                </td>
+                                <td class="px-6 py-5 text-left text-slate-500">${d[i].student.firstName} ${d[i].student.middleName} ${d[i].student.lastName}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${d[i].classroom.level.title}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${digify(d[i].average_score)}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${d[i].grade}</td>
+                                <td class="px-6 py-5 text-center text-slate-500">${d[i].position || 'N/A'}</td>
+                                <td class="px-6 py-5 text-center">
+                                    <!-- Dropdown -->
+                                    <div class="relative">
+                                        <!-- Button -->
+                                        <button
+                                            class="opt-btn flex h-10 w-10 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-800 hover:text-white"
+                                        >
+                                            <!-- Vertical Ellipsis -->
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <!-- Menu -->
+                                        <div
+                                            class="dropdownMenu absolute right-0 z-50 mt-2 hidden w-48 overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-2xl">
+                                
+                                            <a href="#" data-id="${d[i].id}"
+                                                class="res-view-btn flex items-center gap-3 px-4 py-3 text-sm text-gray-300 transition hover:bg-gray-800 hover:text-white">
+                                                <i class="fa fa-file-text"></i>&nbsp;View Result
+                                            </a>
+                                            
+                                            ${d[i].file ? `
+                                            <a href="#" data-id="${d[i].file}"
+                                                class="res-download-btn flex items-center gap-3 px-4 py-3 text-sm text-gray-300 transition hover:bg-gray-800 hover:text-white">
+                                                <i class="fa fa-file-pdf-o"></i>&nbsp;Download Result
+                                            </a> ` : ``}
+                                
+                                        </div>
+                            
+                                    </div>
+                                </td>
+                            </tr>`;
+                          $('#resultBody').append(temp)
+                        }
+
+                        $(".opt-btn").on('click', function() {
+                            $(".dropdownMenu").addClass("hidden")
+                            $(this).siblings(".dropdownMenu").toggleClass('hidden')
+                        })
+                        $('.res-view-btn').click(function(e) {
+                            e.preventDefault();
+                            let id = $(this).data('id');
+                            $(".dropdownMenu").addClass("hidden")
+                            viewResult({type: "single", doc_id: id})
+                        })
+                        $('.res-download-btn').click(function(e) {
+                            e.preventDefault();
+                            let id = $(this).data('id');
+                            let url = `${base_url}${id}`;
+                            $(".dropdownMenu").addClass("hidden")
+                            downloadFile(url)
+                        })
+                    }
+                    else {
+                        let temp = `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                                ${data.message}
+                            </td>
+                        </tr>`;
+                        $('#resultBody').append(temp)
+                    }
+                }
+                else {
+                    showToast(data.message, "error");
+                    let temp = `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td colspan="7" class="px-6 py-5 font-medium whitespace-nowrap text-italic">
+                                ${data.message}
+                            </td>
+                        </tr>`;
+                    $('#resultBody').append(temp)
+                }
+        },
+        onError: (error) => {
+                console.error(error);
+                $('#resultBody').empty();
+                showToast("Error occurred. Kindly check your internet connection", "error");
+        }
+  })
+}
+
+function viewResult(obj) {
+    let url = buildQueryParams(obj, '/staff/results', '')
+    window.open(url, '_blank')
+}
+
+function downloadClassResult(class_id, term_id) {
+    //let obj = {type: "bulk", class_id, term_id}
+    //let url = buildQueryParams(obj, '/results', '')
+
+    let formData = {class_id, term_id}
+
+    //console.log(formData)
+    showLoader(`Generating PDF...`)
+
+    staff.result.classResultPDF({
+        formData: formData,
+        onSuccess: (data) => {
+            //console.log(data)
+            if(data.status == "success") {
+                showToast(data.message, 'success');
+                downloadFile(data.data)
+                getResults()
+            }
+            else {
+                showToast(data.message, 'error');
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            console.error(error);
+            showToast("Error occurred. Kindly check your internet connection", 'error');
+            hideLoader()
+        }
+    })
+}
+
+function generateClassResult(class_id, term_id) {
+    let formData = {class_id, term_id}
+
+    //console.log(formData)
+    showLoader(`Generating Results PDF...`)
+
+    admin.result.studentResultPDF({
+        formData: formData,
+        onSuccess: (data) => {
+            //console.log(data)
+            if(data.status == "success") {
+                pushNotification("n_success", data.message, 5000);
+            }
+            else {
+                pushNotification("n_error", data.message, 3000)
+            }
+            getResults()
+            hideLoader()
+        },
+        onError: (error) => {
+            console.error(error);
+            pushNotification("n_network", "Error occurred. Kindly check your internet connection", 3000)
+            hideLoader()
+        }
+    })
+}
+
+function resultActions() {
+    let action = $("#result-action").val();
+    if(!action) {
+        showToast('Kindly select an action to proceed', 'warning');
+        return
+    }
+    let class_id = $("#class-filter2").val();
+    let term_id = $("#term-filter3").val();
+    if(!class_id) {
+        showToast('Kindly select a class from the menu to proceed', 'warning');
+        return
+    }
+    if(!term_id) {
+        showToast('Kindly select an academic term from the menu to proceed', 'warning');
+        return
+    }
+    switch(action) {
+        case "view":
+            var isconfirm = confirm("This will display the report sheet of each student in the selected classroom for the selected term. Do you want to proceed?")
+            if(isconfirm === false) {
+                return;
+            }
+            viewResult({type: "bulk", class_id, term_id})
+            break;
+        case "single":
+            var isconfirm = confirm("This will generate a downloadable report sheet PDF for each student in the selected classroom for the selected term. Do you want to proceed?")
+            if(isconfirm === false) {
+                return;
+            }
+            generateClassResult(class_id, term_id)
+            break;
+        case "bulk":
+            var isconfirm = confirm("This will generate a single downloadable PDF file containing the report sheet for each student in the selected classroom for the selected term. Do you want to proceed?")
+            if(isconfirm === false) {
+                return;
+            }
+            downloadClassResult(class_id, term_id)
+            break
+    }
+    
+}
+
+$("#result-action-btn").on('click', resultActions)
 
   
 

@@ -7,6 +7,9 @@
     <link rel="shortcut icon" href="/static/logos/logo.png" />
     <link rel="apple-touch-icon" href="/static/logos/logo.png" />
 
+    
+    <script src="/static/js/tailwind.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/fontawesome.css">
     <link rel="stylesheet" type="text/css" href="/static/css/toastify.min.css">
@@ -14,25 +17,32 @@
     <link rel="stylesheet" type="text/css" href="/static/css/result.css">
 
     <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/module/educa-admin-sdk.js"></script>
+    <script src="/static/module/educa-sdk.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/toastify.min.js"></script>
     
 </head>
 <body>
+    <!--
     <button class="btn btn-primary btn-lg download-btn"><i class="fa fa-file-pdf-o"></i> Download PDF</button>
+    -->
     <main>
         
     
     
     </main>
 
-    <div class="page-load">
-        <div class="loader"></div>
-        <div class="w-block h6 mt-3 w-center" id="loader-text">
-          
+    <!-- FULL SCREEN LOADER -->
+    <div id="fullLoader" class="hidden fixed inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-[#1e3a8a] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="mt-6 text-lg font-medium text-slate-600 dark:text-slate-400 loader-text"></p>
         </div>
     </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed top-6 right-6 space-y-3 z-[10000]"></div>
+   
 
     <!-- Grade table 
         <table>
@@ -68,6 +78,6 @@
         
 
     <script src="/static/js/functions.js"></script>
-    <script src="/static/js/result.js"></script>
+    <script src="/static/js/staff/result.js"></script>
 </body>
 </html>
