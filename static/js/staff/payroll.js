@@ -100,10 +100,10 @@ async function renderPayroll() {
         const html = `
                     <tr class="payroll-card hover:bg-slate-50 dark:hover:bg-slate-800">
                         <td class="px-6 py-6 font-medium">${months[record.month]} ${record.year}</td>
-                        <td class="px-6 py-6 text-center">₦${digify(record.amount)}</td>
-                        <td class="px-6 py-6 text-center text-emerald-600">₦${digify(record.allowance)}</td>
-                        <td class="px-6 py-6 text-center text-red-600">-₦${digify(record.deduction)}</td>
-                        <td class="px-6 py-6 text-center font-semibold">₦${digify(record.net_amount)}</td>
+                        <td class="px-6 py-6 text-center">&#8358;${digify(record.amount)}</td>
+                        <td class="px-6 py-6 text-center text-emerald-600">&#8358;${digify(record.allowance)}</td>
+                        <td class="px-6 py-6 text-center text-red-600">-&#8358;${digify(record.deduction)}</td>
+                        <td class="px-6 py-6 text-center font-semibold">&#8358;${digify(record.net_amount)}</td>
                         <td class="px-6 py-6 text-center">
                         ${record.is_paid ? `
                             <span class="inline-block px-5 py-1.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 text-xs font-semibold rounded-2xl">
