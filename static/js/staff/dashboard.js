@@ -42,7 +42,7 @@
             params: {page: "dashboard"},
             onSuccess: (data) => {
                 checkResponse(data)
-                console.log(data)
+                //console.log(data)
                 if(data.status == "success") {
                     let d = data.data;
                     $(".dash-std").html(digify(d.students, false))

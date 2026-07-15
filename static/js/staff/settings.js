@@ -1,22 +1,75 @@
-function triggerAvatarUpload() {
-            showToast("Profile picture upload simulated. In real app, file picker would open.", "info");
-            // Simulate avatar change
-            setTimeout(() => {
-                $('#profileAvatar').attr('src', 'https://i.pravatar.cc/300?u=updated');
-                showToast("Profile picture updated successfully!", "success");
-            }, 800);
-        }
-
-        function savePersonalInfo() {
-            const newName = $('#nameInput').val();
-            if (newName) {
-                $('#fullName').text(newName);
-                showToast("Personal information saved successfully!", "success");
+async function loadProfile() {
+    staff.account.getProfile({
+        onSuccess: async (data) => {
+            checkResponse(data)
+            //console.log(data)
+            if(data.status == "success") {
+                let d = data.data;
+                $("#nameInput").val(`${d.title} ${d.firstName} ${d.middleName} ${d.lastName}`)
+                $("#telInput").val(d.phone_number)
+                $("#emailInput").val(d.email)
+                $("#idInput").val(d.staffId)
+                //$("#dobInput").val(d.date_of_birth)
+                $("#quaInput").val(d.qualification)
+                $("#roleInput").val(d.role)
+                $("#joinInput").html(datify(d.created))
+                $("#resetInput").html(datify(d.password_last_reset))
+                $("#salaryInput").val(`₦${digify(d.salary)}`)
+                $("#addressInput").val(`${d.address.address}, ${d.address.lga}, ${d.address.state} State, ${d.address.country}.`)
+                $("#twoFactorToggle").prop('checked', d._2fa_enabled)
+                $(".twoFAText").html(d._2fa_enabled ? 'Enabled' : 'Disabled')
             }
+            else {
+                showToast(data.message, "error")
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            checkResponse(error)
+            showToast(error, "error")
+            hideLoader()
         }
+    })
+}
 
-        function openChangePasswordModal() {
-            showModal(`
+$(".save-profile-btn").on('click', updateProfile)
+
+async function updateProfile() {
+    let phone_number = $('#telInput').val().trim();
+    if (phone_number === "") {
+        showToast("Phone number is required", "warning");
+        return
+    }
+
+    let formData = {phone_number}
+
+    showLoader("Updating profile...")
+
+    staff.account.updateProfile({
+        formData,
+        onSuccess: async (data) => {
+            checkResponse(data)
+            //console.log(data)
+            if(data.status == "success") {
+                showToast(data.message, "success")
+            }
+            else {
+                showToast(data.message, "error")
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            checkResponse(error)
+            showToast(error, "error")
+            hideLoader()
+        }
+    })
+}
+
+$(".change-pass-btn").on('click', openChangePasswordModal)
+
+function openChangePasswordModal() {
+    showModal(`
                 <div class="p-8">
                     <h3 class="text-2xl font-semibold mb-6">Change Password</h3>
                     <div class="space-y-5">
@@ -38,23 +91,17 @@ function triggerAvatarUpload() {
                     </div>
                     <div class="flex gap-3 mt-8">
                         <button onclick="closeModal()" class="flex-1 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl font-medium">Cancel</button>
-                        <button onclick="changePassword()" class="flex-1 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium">Update Password</button>
+                        <button class="update-pass-btn flex-1 py-4 bg-[#1e3a8a] text-white rounded-2xl font-medium">Update Password</button>
                     </div>
                 </div>
-            `);
-        }
+    `);
 
-        function changePassword() {
-            closeModal();
-            showToast("Password changed successfully!", "success");
-        }
+    $(".update-pass-btn").on('click', changePassword)
+}
 
-        function toggle2FA() {
-            const isEnabled = $('#twoFactorToggle').is(':checked');
-            showToast(isEnabled ? "Two-Factor Authentication Enabled" : "Two-Factor Authentication Disabled", "info");
-        }
 
-        function logout() {
+$(".logout-button").on('click', logout)
+function logout() {
             if (confirm("Are you sure you want to logout from this device?")) {
                 showLoader("Logging out...")
                 staff.account.logout({
@@ -79,15 +126,120 @@ function triggerAvatarUpload() {
               })
                 
             }
+}
+
+
+function changePassword() {
+    let old_password = $("#currentPass").val().trim();
+    let new_password = $("#newPass").val().trim();
+    let confirm_pass = $("#confirmPass").val().trim();
+
+    if(old_password === "" || new_password === "" || confirm_pass === "") {
+        showToast("All fields are required", "warning");
+        return
+    }
+
+    if(new_password !== confirm_pass) {
+        showToast("Passwords do not match!", "warning");
+        return
+    }
+
+    let formData = {new_password, old_password}
+    
+    showLoader("Updating password...")
+
+    staff.account.changePassword({
+        formData,
+        onSuccess: async (data) => {
+            checkResponse(data)
+            //console.log(data)
+            if(data.status == "success") {
+                showToast(data.message, "success");
+                closeModal()
+            }
+            else {
+                showToast(data.message, "error")
+            }
+            hideLoader()
+        },
+        onError: (error) => {
+            checkResponse(error)
+            showToast(error, "error")
+            hideLoader()
         }
+    })
+}
+
+$("#twoFactorToggle").on('change', (e) => {
+    e.preventDefault()
+    const isEnabled = $(this).is(':checked');
+    $(this).prop('checked', isEnabled)
+    console.log(isEnabled)
+})
+
+var uploadBtn = document.querySelector("#image-upload");
+uploadBtn.addEventListener("change", function() {
+  var reader = new FileReader();
+  var file = this.files[0];
+
+  reader.onload = function(e) {
+    document.querySelector("#profileAvatar").src = e.target.result;
+  }
+
+  reader.readAsDataURL(file)
+  uploadImage()
+})
+
+function uploadImage() {
+  let image = $("#image-upload")[0].files[0];
+
+  let formData = new FormData();
+  formData.append("image", image)
+
+
+  showLoader("Uploading image...")
+
+  staff.account.uploadPassport({
+    formData,
+    onSuccess: (data) => {
+        //console.log(data)
+        if(data.status == "success") {
+          showToast(data.message, "success")
+          sessionStorage.removeItem("educa_user_info")
+        }
+        else {
+          showToast(data.message, "error")
+        }
+        hideLoader()
+        $("#image-upload").val('')
+        showUserInfo()
+    },
+    onError: (error) => {
+      //hideLoader()
+      console.error(error)
+      $("#image-upload").val('')
+      showUserInfo()
+      showToast("Error occurred. Kindly check your internet connection and try again", "success")
+    }
+})
+}
+
+
+        
+
+        
+
+        
+
+        
+
         
         
         
-        $(document).ready(function() {
-            initTailwind();
-
-            loadTheme()
-
-            hideLoader();
-
-        });
+        
+$(document).ready(async function() {
+    showLoader("Loading Data...")
+    initTailwind();
+    loadTheme()
+    await loadProfile()
+});

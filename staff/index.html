@@ -45,13 +45,15 @@
                         <span class="text-xl fa fa-gear"></span>
                         <span>Profile & Settings</span>
                     </a>
+                    <!--
                     <a href="#notifications" class="note-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
                         <span class="text-xl fa fa-bell-o"></span>
                         <span>Notifications</span>
                     </a>
+                    -->
                     <a href="#messages" class="mess-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
                         <span class="text-xl fa fa-envelope"></span>
-                        <span>Messages &amp; Events</span>
+                        <span>Notifications &amp; Events</span>
                     </a>
                 </div>
             </nav>
@@ -968,8 +970,8 @@ $("#customSidebar").click(function(e) {
             <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
                 <div class="max-w-screen-2xl mx-auto">
                     <div class="flex border-b border-slate-200 dark:border-slate-700 mb-8">
-                        <button onclick="switchTab(0)" id="tab0" class="tab-active px-8 py-4 text-sm">Events</button>
-                        <button onclick="switchTab(1)" id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Memos &amp; Announcements</button>
+                        <button id="tab0" class="tab-active px-8 py-4 text-sm">Events</button>
+                        <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Memos &amp; Announcements</button>
                     </div>
 
                     <!-- EVENTS SECTION -->
@@ -977,10 +979,10 @@ $("#customSidebar").click(function(e) {
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-xl font-semibold">School Events</h2>
                             <div class="flex gap-2">
-                                <button onclick="filterEvents('all')" class="event-filter active px-5 py-2 text-sm rounded-3xl">All</button>
-                                <button onclick="filterEvents('upcoming')" class="event-filter px-5 py-2 text-sm rounded-3xl">Upcoming</button>
-                                <button onclick="filterEvents('ongoing')" class="event-filter px-5 py-2 text-sm rounded-3xl">Ongoing</button>
-                                <button onclick="filterEvents('past')" class="event-filter px-5 py-2 text-sm rounded-3xl">Past</button>
+                                <button value="" class="event-filter active  bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] px-5 py-2 text-sm rounded-3xl">All</button>
+                                <button value="upcoming" class="event-filter px-5 py-2 text-sm rounded-3xl">Upcoming</button>
+                                <button value="ongoing" class="event-filter px-5 py-2 text-sm rounded-3xl">Ongoing</button>
+                                <button value="past" class="event-filter px-5 py-2 text-sm rounded-3xl">Past</button>
                             </div>
                         </div>
 
@@ -1006,7 +1008,7 @@ $("#customSidebar").click(function(e) {
     <script src="/static/js/staff/message.js"></script>
     <script>
       $('.mess-act').removeClass("text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800").addClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
-      $(".page-name").text("Messages");
+      $(".page-name").text("Notifications & Events");
 
       $('#emp_search').on('input', function(e) {
         $('#emp_page').val(1);
@@ -1029,21 +1031,22 @@ $("#customSidebar").click(function(e) {
                         <div class="flex flex-col md:flex-row items-center gap-8">
                             <!-- Avatar -->
                             <div class="relative">
-                                <div onclick="triggerAvatarUpload()" id="profileAvatarContainer"
-                                     class="profile-avatar w-32 h-32 bg-slate-200 dark:bg-slate-700 rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl cursor-pointer">
+                                <label for="image-upload" id="profileAvatarContainer"
+                                     class="block profile-avatar w-32 h-32 bg-slate-200 dark:bg-slate-700 rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl cursor-pointer">
                                     <img id="profileAvatar" src="https://i.pravatar.cc/300?u=teacher" 
                                          alt="Profile Picture" class="admin-img w-full h-full object-cover">
+                                </label>
+                                <div class="absolute bottom-2 right-2 bg-emerald-500 text-white text-xs font-bold px-3 py-3 rounded-2xl">
+                                    <i class="fa fa-camera"></i>
                                 </div>
-                                <div class="absolute bottom-2 right-2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-2xl">
-                                    Active
-                                </div>
+                                <input type="file" id="image-upload" style="position:fixed;top:-100000px;">
                             </div>
 
                             <!-- Info -->
                             <div class="flex-1 text-center md:text-left">
                                 <h2 id="fullName" class="admin-user text-3xl font-semibold"></h2>
                                 <p class="admin-role text-[#1e3a8a] dark:text-blue-400 font-medium mt-1"></p>
-                                <p class="text-slate-500 dark:text-slate-400 mt-4">Staff ID: <span class="admin-id"></span> • Joined: September 2022</p>
+                                <p class="text-slate-500 dark:text-slate-400 mt-4">Staff ID: <span class="admin-id"></span> • Created: <span id="joinInput"></span></p>
                                 
                                 <div class="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
                                     
@@ -1066,26 +1069,64 @@ $("#customSidebar").click(function(e) {
                             <div class="space-y-6">
                                 <div>
                                     <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Full Name</label>
-                                    <input type="text" id="nameInput" value="" 
+                                    <input type="text" id="nameInput" value="" readonly
                                            class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl focus:outline-none focus:border-[#1e3a8a]">
                                 </div>
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-4">
+                                    
                                     <div>
-                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Phone Number</label>
-                                        <input type="tel" value="" 
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Email</label>
+                                        <input type="email" id="emailInput" value="" readonly
                                                class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Date of Birth</label>
-                                        <input type="date" value="" 
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5"><span class="text-red-700">*</span> Phone Number</label>
+                                        <input type="tel" id="telInput" value="" 
                                                class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
                                     </div>
                                 </div>
-                                <button onclick="savePersonalInfo()" 
-                                        class="w-full py-4 bg-[#1e3a8a] hover:bg-blue-700 text-white font-medium rounded-2xl">
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Address</label>
+                                    <textarea rows="2" id="addressInput" value="" readonly
+                                           class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl focus:outline-none focus:border-[#1e3a8a]"></textarea>
+                                </div>
+                                
+                            </div>
+
+                            <h3 class="text-xl mt-[30px] font-semibold mb-6 flex items-center gap-2">
+                                <i class="fa fa-graduation-cap text-blue-900"></i> Academic Information
+                            </h3>
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Staff ID</label>
+                                        <input type="text" id="idInput" value="" readonly
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Qualification</label>
+                                        <input type="text" id="quaInput" value="" readonly
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Role</label>
+                                        <input type="text" id="roleInput" value="" readonly
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1.5">Salary</label>
+                                        <input type="text" id="salaryInput" value="" readonly
+                                               class="w-full px-5 py-4 border border-slate-300 dark:border-slate-600 rounded-2xl">
+                                    </div>
+                                </div>
+                                <button
+                                        class="save-profile-btn w-full py-4 bg-[#1e3a8a] hover:bg-blue-700 text-white font-medium rounded-2xl">
                                     Save Changes
                                 </button>
                             </div>
+
+                            
                         </div>
 
                         <!-- Security Settings -->
@@ -1095,37 +1136,36 @@ $("#customSidebar").click(function(e) {
                             <div class="space-y-8">
                                 <!-- Password -->
                                 <div>
-                                    <button onclick="openChangePasswordModal()" 
-                                            class="w-full flex items-center justify-between p-5 border border-slate-300 dark:border-slate-600 hover:border-[#1e3a8a] rounded-2xl">
+                                    <button class="change-pass-btn w-full flex items-center justify-between p-5 border border-slate-300 dark:border-slate-600 hover:border-[#1e3a8a] rounded-2xl">
                                         <div class="flex items-center gap-4">
                                             <span class="text-2xl fa fa-key text-orange-600"></span>
-                                            <div>
+                                            <div class="text-left">
                                                 <p class="font-medium">Change Password</p>
-                                                <p class="text-sm text-slate-500">Last changed 3 months ago</p>
+                                                <p class="text-sm text-slate-500">Last changed <span id="resetInput"></span></p>
                                             </div>
                                         </div>
                                         <span class="text-[#1e3a8a]">→</span>
                                     </button>
                                 </div>
 
-                                <!-- 2FA -->
+                                <!-- 2FA
                                 <div class="flex items-center justify-between p-5 border border-slate-300 dark:border-slate-600 rounded-2xl">
                                     <div class="flex items-center gap-4">
                                         <span class="text-2xl fa fa-shield text-green-600"></span>
                                         <div>
                                             <p class="font-medium">Two-Factor Authentication</p>
-                                            <p class="text-sm text-emerald-600">Enabled</p>
+                                            <p class="text-sm text-emerald-600 twoFAText"></p>
                                         </div>
                                     </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="twoFactorToggle" checked onchange="toggle2FA()" class="sr-only peer">
+                                        <input type="checkbox" id="twoFactorToggle" class="sr-only peer">
                                         <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
                                     </label>
                                 </div>
+                                 -->
 
                                 <!-- Logout -->
-                                <button onclick="logout()" 
-                                        class="w-full py-4 border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium rounded-2xl">
+                                <button class="logout-button w-full py-4 border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium rounded-2xl">
                                     Logout from This Devices
                                 </button>
                             </div>
