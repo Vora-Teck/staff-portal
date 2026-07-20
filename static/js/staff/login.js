@@ -34,7 +34,7 @@ function authenticate() {
         }
         const formData = {email, password}
     
-        let button = $('button[type="submit"]')
+        let button = $('button.log-btn[type="submit"]')
         let originalText = button.html()
             
         // Loading state
@@ -74,47 +74,69 @@ function authenticate() {
 
     
 function resetPassword() {
-        let email = $('#forg-email').val();
+        let email = $('#forgot-email').val().trim();
     
-        if(!email) {
-            pushNotification("n_error", "Email cannot be empty", 3000);
+        if(email === "") {
+            showToast("Email address required", "warning");
             return
         }
         const formData = {email}
-        showLoader("Processing...")
+        let button = $('button.reset-btn[type="submit"]')
+        let originalText = button.html()
+
+        $(".stat-msg").empty();
+            
+        // Loading state
+        button.css('pointerEvents', 'none')
+        button.html(`
+                <svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+        `)
     
-        admin.account.forgotPassword({
+        staff.account.forgotPassword({
             formData: formData,
             onSuccess: (data) => {
-                    console.log(data);
-                    if(data.status == 'success') {
-                            pushNotification("n_success", data.message, -1)
-                            location.href = '#'
-                    }
-                    else {
-                            pushNotification("n_error", data.message, 5000)
-                    }
-                    hideLoader()
+                console.log(data);
+                if(data.status == 'success') {
+                    showToast(data.message, "success") 
+                    $(".stat-msg").html(`
+                        <div class="p-4 w-full text-sm font-medium rounded-sm bg-emerald-100 text-emerald-700">${data.message}</div>
+                    `)
+                }
+                else {
+                    showToast(data.message, "error")
+                    $(".stat-msg").html(`
+                        <div class="p-4 w-full text-sm font-medium rounded-sm bg-red-100 text-red-700">${data.message}</div>
+                    `)
+                }
+                button.css('pointerEvents', 'auto')
+                button.html(originalText)
             },
             onError: (error) => {
-                    console.error(error);
-                    pushNotification("n_network", "Error occurred. Kindly check your internet connection", 3000)
-                    hideLoader()
+                showToast(`Error occurred: ${error}`, "error")
+                $(".stat-msg").html(`
+                        <div class="p-4 w-full text-sm font-medium rounded-sm bg-red-100 text-red-700">Error occurred: ${error}</div>
+                    `)
+                button.css('pointerEvents', 'auto')
+                button.html(originalText)
             }
       })
 }
 
-function forgotPassword() {
-        const email = document.getElementById('email').value
-        alert(`🔑 Password reset link has been sent to:\n${email}\n\n(Check your inbox in a real system)`)
-    }
+$(".forgot-pass-btn").on('click', (e) => {
+    e.preventDefault();
+    $(".switch-form").toggleClass("hidden")
+})
+
 
 $('#loginForm').submit(function(e) {
     e.preventDefault();
     authenticate();
 })
 
-$('#forgot-form').submit(function(e) {
+$('#forgotForm').submit(function(e) {
         e.preventDefault();
         resetPassword();
     })

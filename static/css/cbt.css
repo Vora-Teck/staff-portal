@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .logo-font { font-family: 'Poppins', sans-serif; }
+        
+        .question-option { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .question-option:hover { transform: translateX(4px); }
+        .question-option.selected { 
+            background-color: #00529E !important; 
+            color: white !important; 
+            border-color: #00529E !important;
+        }
+        #timer { font-variant-numeric: tabular-nums; }
+        .q-btn {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .q-btn.unanswered { background-color: #e5e7eb; color: #6b7280; }
+        .q-btn.answered { background-color: #00529E; color: white; }
+        .q-btn.current { 
+            background-color: #bfdbfe; 
+            color: #1e40af; 
+            border: 3px solid #00529E; 
+            font-weight: 700;
+        }

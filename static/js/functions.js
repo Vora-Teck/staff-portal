@@ -433,4 +433,3 @@ function initiateTiny(mini=false, elem='.html-text', content="") {
 }
 //initiateTiny();
 
-

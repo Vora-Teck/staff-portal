@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="title" content="">
+    <link rel="shortcut" href="">
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/cbt.css">
+    <link rel="stylesheet" href="/static/css/fontawesome.css">
+    <script src="/static/js/tailwind.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/module/educa-sdk.js"></script>
+</head>
+<body class="bg-[#F7FAFF] min-h-screen">
+
+    <!-- FULL SCREEN LOADER -->
+    <div id="fullLoader" class="hidden fixed inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-[#1e3a8a] dark:border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p class="mt-6 text-lg font-medium text-slate-600 dark:text-slate-400 loader-text"></p>
+        </div>
+    </div>
+    
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed top-6 right-6 space-y-3 z-[10000]"></div>
+   
+
+    <div id="customModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 overflow-hidden">
+            <button id="customModalCancel" class="hidden float-right text-5xl leading-none text-red-400 hover:text-red-600 py-3 px-4">×</button>
+            <div class="p-10 text-center">
+                <div id="customModalIcon" class="mx-auto w-20 h-20 bg-amber-100 text-5xl rounded-2xl flex items-center justify-center mb-6"></div>
+                <h3 class="text-3xl font-semibold mb-3" id="customModalTitle">Title Here</h3>
+                <p id="customModalText" class="text-gray-600 leading-relaxed">Content Here.</p>
+            </div>
+            <div class="border-t grid grid-cols-1">
+                <button id="customModalBtn" 
+                        class="py-6 text-lg font-medium text-gray-500 hover:bg-gray-100 border-r">
+                    OK
+                </button>
+                <!--
+                <button id="customMdalBtn"
+                        class="py-6 text-lg font-semibold text-red-600 hover:bg-red-50">
+                    Yes, Submit
+                </button>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 h-screen">
+        <div class="bg-[#00529E] flex items-center justify-center text-white relative p-4">
+            <div class="text-center px-12">
+                <div class="flex justify-center mb-8">
+                    <img class="w-70 h-70 flex items-center justify-center"
+                    src="/static/logos/logo_white_cbt_trans.png" alt="">
+                </div>
+                <div class="mt-16 text-sm opacity-75">© Vora-Teck</div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center p-10 bg-white">
+            <div class="max-w-md w-full">
+                <div class="flex justify-center mb-10">
+                    <div class="text-center">
+                        <img class="site-logo mx-auto w-[100px] h-[100px] rounded-2xl flex items-center justify-center text-white text-4xl mb-4"
+                        src="" alt="">
+                        <h2 class="text-3xl site-title font-semibold"></h2>
+                    </div>
+                </div>
+                <h2 class="text-4xl font-semibold text-center mb-3">Welcome Back!</h2>
+                <p class="text-center text-gray-600 mb-10">Kindly enter your login details to start your exam</p>
+                
+                <form id="login-form" class="space-y-7">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Student ID</label>
+                        <input id="username" type="text" 
+                               class="w-full px-5 py-5 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#00529E] text-lg placeholder-gray-400"
+                               placeholder="Enter your student ID" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input id="password" type="password" 
+                               class="w-full px-5 py-5 border border-gray-200 rounded-2xl focus:outline-none focus:border-[#00529E] text-lg placeholder-gray-400"
+                               placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit"
+                            class="w-full bg-[#00529E] hover:bg-[#003970] transition-all text-white py-5 rounded-2xl text-xl font-semibold shadow-lg shadow-blue-800/30">
+                        Log In
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam List Screen -->
+    <div id="exam-list-screen" class="screen hidden flex flex-col h-screen">
+        <header class="bg-white shadow-sm border-b px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-4">
+                <img class="site-logo w-11 h-11"
+                src="" alt="">
+                <div>
+                    <p class="font-semibold text-lg site-title"></p>
+                    <p class="text-xs text-emerald-600 font-medium">Computer Based Test</p>
+                </div>
+            </div>
+            <div class="logout-btn flex items-center gap-x-2 text-red-600 hover:text-red-700 cursor-pointer font-medium">
+                <span>Logout</span>
+            </div>
+        </header>
+        
+        <div class="flex-1 p-10 overflow-auto">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-10">
+                    <h1 class="text-4xl font-semibold text-gray-900">Available Exams</h1>
+                    <p class="text-gray-500 mt-2">Select an exam/test to begin</p>
+                </div>
+                <div id="exam-list" class="grid grid-cols-1 gap-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Screen -->
+    <div id="exam-screen" class="screen hidden flex flex-col h-screen">
+        <header class="bg-[#00529E] text-white px-8 py-5 flex items-center justify-between shadow">
+            <div class="flex items-center gap-x-4">
+                <img class="site-logo w-11 h-11"
+                src="" alt="">
+                <div>
+                    <div id="exam-title" class="font-semibold text-lg"></div>
+                    <div class="text-xs opacity-75"><span class="site-title"></span> • CBT</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-10">
+                <div class="flex items-center gap-x-3">
+                    <span class="text-sm font-medium opacity-90">Time Remaining</span>
+                    <div id="timer" class="tabular-nums text-3xl font-bold font-mono tracking-tighter bg-white/10 px-5 py-1 rounded-2xl"></div>
+                </div>
+                <button id="submit-modal-btn" 
+                        class="px-7 py-3 bg-white text-[#00529E] font-semibold rounded-2xl hover:bg-gray-100 transition">
+                    Submit
+                </button>
+                <button id="open-calc-btn"
+                        class="ml-4 px-5 py-3 bg-white/10 hover:bg-white/20 text-white rounded-2xl flex items-center gap-2 text-sm">
+                    <span class="text-xl">🔢</span>
+                    <span>Calculator</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex justify-center items-stretch gap-3 p-5">
+            <div class="w-[350px] bg-white rounded-3xl shadow p-5">
+                <div id="profile-container"></div>
+                <div id="question-navigator" class="flex flex-wrap gap-3"></div>
+            </div>
+        
+            <div class="w-full overflow-auto bg-[#F7FAFF]">
+                <div class="max-w-5xl mx-auto">
+                    <!-- Question Navigator
+                    <div id="question-navigator" class="flex flex-wrap gap-3 mb-8 bg-white p-6 rounded-3xl shadow-sm"></div>
+                     -->
+                    <!-- Progress counter -->
+                    <div class="flex justify-between mb-6 items-baseline">
+                        <div id="question-counter" class="font-medium text-xl"></div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-500">PROGRESS</div>
+                            <div id="progress-text" class="text-2xl font-semibold text-[#00529E]">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div id="question-container" class="bg-white rounded-3xl shadow p-10 mb-10"></div>
+                    
+                    <!-- Next/Prev Buttons -->
+                    <div class="flex justify-between">
+                        <button id="prev-btn"
+                                class="px-10 py-4 border-2 border-gray-300 hover:border-gray-400 rounded-2xl font-medium text-lg transition">
+                            ← Previous
+                        </button>
+                        <button id="next-btn"
+                                class="px-12 py-4 bg-[#00529E] hover:bg-[#003970] text-white rounded-2xl font-semibold text-lg transition">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <!-- Submit Modal -->
+    <div id="submit-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 overflow-hidden">
+            <div class="p-10 text-center">
+                <div class="mx-auto w-20 h-20 bg-amber-100 text-5xl rounded-2xl flex items-center justify-center mb-6">⚠️</div>
+                <h3 class="text-3xl font-semibold mb-3">End Exam?</h3>
+                <p id="modal-text" class="text-gray-600 leading-relaxed">Your responses will be submitted. This action cannot be undone.</p>
+            </div>
+            <div class="border-t grid grid-cols-2">
+                <button id="hide-submit-btn" 
+                        class="py-6 text-lg font-medium text-gray-500 hover:bg-gray-100 border-r">
+                    Cancel
+                </button>
+                <button
+                        class="submit-btn py-6 text-lg font-semibold text-red-600 hover:bg-red-50">
+                    Yes, Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Calculator Modal -->
+    <div id="calculator-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[99999]">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-xs overflow-hidden">
+            <!-- Header -->
+            <div class="bg-[#00529E] text-white px-6 py-4 flex items-center justify-between">
+                <div class="font-medium">Calculator</div>
+                <button id="close-calc-btn" class="text-white/80 hover:text-white text-2xl leading-none">×</button>
+            </div>
+            
+            <!-- Display -->
+            <div class="bg-gray-900 p-6 text-right">
+                <div id="calc-display" class="text-white text-4xl font-light tracking-wider min-h-[60px] break-all">0</div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="grid grid-cols-4 gap-1 p-4 bg-gray-50">
+                <button onclick="calcInput('C')" class="calc-btn bg-red-100 text-red-600 hover:bg-red-200">C</button>
+                <button onclick="calcInput('±')" class="calc-btn bg-gray-200 hover:bg-gray-300">±</button>
+                <button onclick="calcInput('%')" class="calc-btn bg-gray-200 hover:bg-gray-300">%</button>
+                <button onclick="calcInput('/')" class="calc-btn bg-[#00529E] text-white hover:bg-[#003970]">÷</button>
+                
+                <button onclick="calcInput('7')" class="calc-btn bg-white hover:bg-gray-100">7</button>
+                <button onclick="calcInput('8')" class="calc-btn bg-white hover:bg-gray-100">8</button>
+                <button onclick="calcInput('9')" class="calc-btn bg-white hover:bg-gray-100">9</button>
+                <button onclick="calcInput('*')" class="calc-btn bg-[#00529E] text-white hover:bg-[#003970]">×</button>
+                
+                <button onclick="calcInput('4')" class="calc-btn bg-white hover:bg-gray-100">4</button>
+                <button onclick="calcInput('5')" class="calc-btn bg-white hover:bg-gray-100">5</button>
+                <button onclick="calcInput('6')" class="calc-btn bg-white hover:bg-gray-100">6</button>
+                <button onclick="calcInput('-')" class="calc-btn bg-[#00529E] text-white hover:bg-[#003970]">−</button>
+                
+                <button onclick="calcInput('1')" class="calc-btn bg-white hover:bg-gray-100">1</button>
+                <button onclick="calcInput('2')" class="calc-btn bg-white hover:bg-gray-100">2</button>
+                <button onclick="calcInput('3')" class="calc-btn bg-white hover:bg-gray-100">3</button>
+                <button onclick="calcInput('+')" class="calc-btn bg-[#00529E] text-white hover:bg-[#003970]">+</button>
+                
+                <button onclick="calcInput('0')" class="calc-btn col-span-2 bg-white hover:bg-gray-100">0</button>
+                <button onclick="calcInput('.')" class="calc-btn bg-white hover:bg-gray-100">.</button>
+                <button onclick="calcEquals()" class="calc-btn bg-emerald-600 text-white hover:bg-emerald-700">=</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script type="module" src="/static/js/cbt/script.js"></script>
+</body>
+</html>

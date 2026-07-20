@@ -37,6 +37,7 @@
     
     async function getData() {
         showLoader("Loading Dashboard...")
+        console.log("Dashboard")
         
         staff.school.schoolData({
             params: {page: "dashboard"},

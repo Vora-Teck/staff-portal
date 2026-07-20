@@ -67,9 +67,9 @@ async function getAssignedClassrooms() {
                                         class="flex-1 py-4 text-sm font-medium border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl">
                                     View Students
                                 </button>
-                                <button onclick="takeAttendance(${classroom.id})" 
+                                <button onclick="viewTimetable(${classroom.id})" 
                                         class="flex-1 py-4 text-sm font-medium bg-[#1e3a8a] text-white hover:bg-blue-700 rounded-2xl">
-                                    Take Attendance
+                                    View Timetable
                                 </button>
                             </div>
                         </div>
@@ -398,14 +398,244 @@ async function getAssignedClassrooms() {
 
         }
 
-        function takeAttendance(id) {
-            const classroom = classrooms.find(c => c.id === id);
-            showToast(`Opening attendance for ${classroom.title}`, 'info');
-            // Redirect to attendance page with pre-selected class
-            setTimeout(() => {
-                window.location.href = '#attendance';
-            }, 800);
-        }
+
+function getTimetable() {
+    let class_id = $("#class-filter2").val()
+
+    let loader_process = `<div class="loader mb-3" style="margin:auto;"></div>`;
+
+    $(".time-table-body").empty().html(loader_process)
+    $(".time-table-head").empty()
+    $(".time-table-body2").empty().html(loader_process)
+    $(".time-table-head2").empty()
+    $(".time-name").html(``)
+
+    $(".time-btns").addClass("w-hide")
+
+    if(!class_id) {
+        $(".time-table-body").empty();
+        $(".time-table-body2").empty();
+        pushNotification("n_info", "Kindly select a class", 5000);
+        return;
+    }
+
+    //showLoader("Fetching timetable...")
+
+    admin.timetable.getTimetable({
+        params: {class_id},
+            onSuccess: (data) => {
+                $(".time-table-body").empty()
+                $(".time-table-body2").empty()
+                //console.log(data)
+                if(data.status == "success") {
+                    let d = data.data;
+                    $(".time-name").html(`${d.classroom.level.title} Timetable`)
+
+                    let periods = d.period;
+                    let mon = d.monday;
+                    let tue = d.tuesday;
+                    let wed = d.wednesday;
+                    let thu = d.thursday;
+                    let fri = d.friday;
+
+                    // Horizontal arrangements
+                    $(".time-table-head").append(`<th></th>`)
+                    for(let i in periods) {
+                        var temp = `<th style="text-align:center;"></th>`;
+                        $(".time-table-head").append(temp)
+                    }
+
+                    let mon_row = `<td>Mon</td>`;
+                    let tue_row = `<td>Tue</td>`;
+                    let wed_row = `<td>Wed</td>`;
+                    let thu_row = `<td>Thur</td>`;
+                    let fri_row = `<td>Fri</td>`;
+
+                    for(let a in mon) {
+                        mon_row += `<td>${mon[a].subject}</td>`
+                    }
+                    $(".time-table-body").append(`<tr>${mon_row}</tr>`)
+
+                    for(let a in tue) {
+                        tue_row += `<td>${tue[a].subject}</td>`
+                    }
+                    $(".time-table-body").append(`<tr>${tue_row}</tr>`)
+
+                    for(let a in wed) {
+                        wed_row += `<td>${wed[a].subject}</td>`
+                    }
+                    $(".time-table-body").append(`<tr>${wed_row}</tr>`)
+
+                    for(let a in thu) {
+                        thu_row += `<td>${thu[a].subject}</td>`
+                    }
+                    $(".time-table-body").append(`<tr>${thu_row}</tr>`)
+
+                    for(let a in fri) {
+                        fri_row += `<td>${fri[a].subject}</td>`
+                    }
+                    $(".time-table-body").append(`<tr>${fri_row}</tr>`)
+                    
+                    // Vertical arrangements
+                    $(".time-table-head2").append(`
+                        <th>Periods</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    `)
+
+                    for(let j = 0; j < periods.length; j++) {
+                        let temp = `
+                        <tr>
+                            <td>${timify(periods[j].start)}<br>-<br>${timify(periods[j].end)}</td>
+                            <td>${mon[j].subject}</td>
+                            <td>${tue[j].subject}</td>
+                            <td>${wed[j].subject}</td>
+                            <td>${thu[j].subject}</td>
+                            <td>${fri[j].subject}</td>
+                        </tr>`;
+
+                        $(".time-table-body2").append(temp)
+                    }
+
+                    $(".time-btns").removeClass("w-hide")
+                }
+                else {
+                    pushNotification("n_error", data.message, 3000)
+                }
+            },
+            onError: (error) => {
+                console.error(error)
+                $(".time-table-body").empty()
+                pushNotification("n_error", "Internet connection error!", 3000)
+            }
+    })
+}
+    
+function viewTimetable(class_id) {
+    const classroom = classrooms.find(c => c.id === class_id);
+    //console.log(classroom)
+
+    showLoader("Fetching data...")
+    staff.classroom.getTimetable({
+        params: {class_id},
+            onSuccess: (data) => {
+                //console.log(data)
+                if(data.status == 'success') {
+                    let d = data.data;
+
+                    let periods = d.period;
+                    let mon = d.monday;
+                    let tue = d.tuesday;
+                    let wed = d.wednesday;
+                    let thu = d.thursday;
+                    let fri = d.friday;
+
+                    showModal(`
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                                <div>
+                                    <h2 class="font-semibold text-lg" id="clasTitle">${classroom.title} Timetable</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400" id="attendancDateDisplay"></p>
+                                </div>
+                                <button class="download-time-btn py-4 px-3 min-w-[150px] bg-[#1e3a8a] text-white rounded-2xl font-medium">Download PDF</button>
+                            
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full timetable-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Periods</th>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Monday</th>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Tuesday</th>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Wednesday</th>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Thursday</th>
+                                            <th class="px-6 py-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Friday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="attendanceTableBody" class="att-list divide-y divide-slate-100 dark:divide-slate-700">
+                                    
+                                    ${periods.map((item, i) => {
+                                        return `
+                                        <tr>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${timify(item.start)}<br>-<br>${timify(item.end)}
+                                            </td>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${mon[i].subject}
+                                            </td>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${tue[i].subject}
+                                            </td>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${wed[i].subject}
+                                            </td>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${thu[i].subject}
+                                            </td>
+                                            <td class="px-6 py-4 text-center font-medium text-slate-600 dark:text-slate-400">
+                                                ${fri[i].subject}
+                                            </td>
+                                        </tr>`
+                                            }).join("")}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex w-full justify-between gap-3 p-3">
+                                <button onclick="closeModal()" 
+                                        class="py-4 px-3 min-w-[150px] border border-slate-300 dark:border-slate-600 rounded-2xl font-medium">Cancel</button>
+                                
+                            </div>
+                        </div>
+                    `, 'max-w-4xl');
+
+                    $(".download-time-btn").on('click', function() {
+                        downloadTimetable(class_id)
+                    })
+                }
+                else {
+                    showToast(data.message, "error")
+                }
+                hideLoader()
+            },
+            onError: (error) => {
+                console.error(error)
+                showToast("Error occurred. Kindly check your internet connection", "error")
+                hideLoader()
+            }
+    })
+}
+
+function downloadTimetable(class_id) {
+    const classroom = classrooms.find(c => c.id === class_id);
+    //console.log(classroom)
+
+    showLoader(`Generating ${classroom.title} timetable...`)
+    staff.classroom.downloadTimetable({
+        formData: {class_id},
+            onSuccess: (data) => {
+                //console.log(data)
+                if(data.status == 'success') {
+                    let d = data.data;
+                    showToast(data.message, "success")
+                    downloadFile(d)
+                }
+                else {
+                    showToast(data.message, "error")
+                }
+                hideLoader()
+            },
+            onError: (error) => {
+                console.error(error)
+                showToast("Error occurred. Kindly check your internet connection", "error")
+                hideLoader()
+            }
+    })
+}
 
         function openAddClassroomModal() {
             showModal(`
