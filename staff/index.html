@@ -1,177 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- template -->
-  
-  <!-- navigation bar -->
-  <template id="sidenav">
-    <div id="customSidebar" class="hidden lg:hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[120] p-0 overflow-y-auto"></div>
-        <div id="sidebar" class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full fixed lg:relative z-[145] transition-transform duration-300 -translate-x-full lg:translate-x-0">
-            <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-                <img src="" alt="school_logo" class="site-logo w-10 h-10 rounded-2xl font-bold shadow-inner" />
-                <div>
-                    <span class="site-title text-1xl font-semibold tracking-tight text-[#1e3a8a] dark:text-blue-400"></span>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 -mt-1">Eduka Staff Portal</p>
-                </div>
-            </div>
 
-            <nav class="flex-1 px-4 py-6 overflow-y-auto">
-                <div class="space-y-1">
-                    <a href="#" class="dash-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-tachometer"></span>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="#courses" class="course-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-book"></span>
-                        <span>Subjects &amp; Notes</span>
-                    </a>
-                    <a href="#classes" class="class-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-building"></span>
-                        <span>Classrooms</span>
-                    </a>
-                    <a href="#attendance" class="att-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-calendar"></span>
-                        <span>Attendance</span>
-                    </a>
-                    <a href="#exams" class="exams-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-file-text"></span>
-                        <span>Exams &amp; Tests</span>
-                    </a>
-                    <a href="#payroll"  class="pay-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-money"></span>
-                        <span>Payroll</span>
-                    </a>
-                    <a href="#profile" class="pro-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-gear"></span>
-                        <span>Profile & Settings</span>
-                    </a>
-                    <!--
-                    <a href="#notifications" class="note-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-bell-o"></span>
-                        <span>Notifications</span>
-                    </a>
-                    -->
-                    <a href="#messages" class="mess-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <span class="text-xl fa fa-envelope"></span>
-                        <span>Notifications &amp; Events</span>
-                    </a>
-                </div>
-            </nav>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-            <div class="p-4 border-t border-slate-200 dark:border-slate-800">
-                <a href="#profile" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800">
-                    <div class="w-9 h-9 bg-slate-200 dark:bg-slate-700 rounded-2xl overflow-hidden">
-                        <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
-                    </div>
-                    <div class="flex-1">
-                        <p class="admin-user font-medium text-sm"></p>
-                        <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
-                    </div>
-                </a>
-            </div>
-        </div>
-       
+    <!-- Site Properties -->
+    <title></title>
+    <link rel="shortcut icon" href="/static/logos/icon.png" />
+    <link rel="shortcut" href="/static/logos/icon.png" />
     
-    <script src="/static/js/staff/login.js"></script>
-    <script>
-          $('.logout-btn').click(function(e) {
-            e.preventDefault();
-            logout();
-          })
-        showSchoolInfo()
-        
-       
-    $("#customModal").on('click', function(e) {
-        // If clicked on backdrop (not on the modal content itself)
-        if (e.target === this) {
-            //alert("hi")
-            closeModal();
-        }
-    });
+    <link rel="stylesheet" type="text/css" href="/static/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/rigan.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/dashboard.css">
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/marked.min.js"></script>
+    <script src="/static/js/tailwind.min.js"></script>
+    <script src="/static/tinymce/tinymce.min.js"></script>
+    <script src="/static/module/educa-sdk.js"></script>
     
-    
-$("#customSidebar").click(function(e) {
-    if(e.target === this) {
-        toggleSidebar()
-    }
-})
-    
-    // Close with Escape key
-    $(document).on('keydown', function(e) {
-        //alert("hi")
-        if (e.key === "Escape") {
-            closeModal();
-        }
-        
-        //var side_btn = 
-        
-        if (e.target === this) {
-            //alert("hi")
-            closeModal();
-        }
-    });
+                                             
+    <script src="/static/js/apexcharts.js"></script>                                      
 
-    </script>
-  </template>
-
-  <!-- header -->
-  <template id="header">
-    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 h-16 lg:h-20 flex items-center px-6 z-40">
-                <div class="flex items-center justify-between w-full max-w-screen-2xl mx-auto">
-                    <div class="flex items-center gap-4">
-                        <button onclick="toggleSidebar()" class="side-btn lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                        <h1 class="page-name text-2xl font-semibold text-[#1e3a8a] dark:text-blue-400 tracking-tight"></h1>
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                        <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-3xl px-5 py-2 w-80">
-                            <span class="text-slate-400 fa fa-search"></span>
-                            <input type="text" class="bg-transparent border-0 focus:outline-none ml-3 flex-1 text-sm placeholder-slate-400" placeholder="Search students, courses...">
-                        </div>
-
-                        <a href="#notifications" class="relative p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
-                            <span class="text-xl fa fa-bell-o"></span>
-                            <span class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center">3</span>
-                        </a>
-
-                        <button onclick="toggleDarkMode()" id="themeToggle" class="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-xl">
-                            <i class="fa fa-moon-o text-gray"></i>
-                        </button>
-
-                        <div onclick="window.location.href='#profile'" class="flex items-center gap-3 cursor-pointer">
-                            <div class="text-right hidden sm:block">
-                                <p class="admin-user font-semibold text-sm"></p>
-                                <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
-                            </div>
-                            <div class="w-9 h-9 rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-600">
-                                <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-    
-    <script>
-      showUserInfo()
-
-    </script>
-    
-  </template>
 
 
 <template id="dashboard">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <!-- Welcome Banner -->
                     <div class="welcome-bg rounded-3xl p-8 lg:p-10 text-white mb-8">
                         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -301,11 +159,6 @@ $("#customSidebar").click(function(e) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
-            
-            
-        </div>
     </div>
 
 
@@ -323,14 +176,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="courses">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <!-- Tabs -->
                     <div class="flex align-center border-b border-slate-200 dark:border-slate-700 mb-8">
                         <button id="tab0" class="tab-active px-8 py-4 text-sm">Syllabus</button>
@@ -386,9 +232,6 @@ $("#customSidebar").click(function(e) {
                             </div>
                         </div>
                     </form>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/subject.js"></script>
@@ -405,15 +248,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="classes">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                
-              <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                 <!-- Tabs -->
                 <div class="flex align-center border-b border-slate-200 dark:border-slate-700 mb-8">
                   <button id="tab0" class="tab-active px-8 py-4 text-sm">Classrooms</button>
@@ -450,9 +285,6 @@ $("#customSidebar").click(function(e) {
                   </div>
                 </div>
                     
-              </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/classroom.js"></script>
@@ -469,14 +301,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="attendance">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 mb-8 border border-slate-100 dark:border-slate-700">
                         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             <!-- Class Selection -->
@@ -571,9 +396,6 @@ $("#customSidebar").click(function(e) {
                             <div class="text-sm text-slate-500 mt-1">Late</div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/attendance.js"></script>
@@ -590,14 +412,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="exams">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="exam-tabs flex border-b border-slate-200 dark:border-slate-700 mb-8">
                         <button id="tab0" class="tab-active px-8 py-4 text-sm">Score Sheet</button>
                         <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Exams & Tests</button>
@@ -823,9 +638,6 @@ $("#customSidebar").click(function(e) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/exam.js"></script>
@@ -842,14 +654,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="payroll">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="bg-gradient-to-r from-[#1e3a8a] to-blue-600 text-white rounded-3xl p-8 mb-8">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                             <div>
@@ -905,9 +710,6 @@ $("#customSidebar").click(function(e) {
                             <p class="text-3xl font-semibold mt-3 pay-date">N/A</p>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/payroll.js"></script>
@@ -924,14 +726,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="notifications">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="flex gap-2 mb-6 bg-white dark:bg-slate-900 p-2 rounded-3xl w-fit border border-slate-100 dark:border-slate-700">
                         <button onclick="filterNotifications(0)" id="filter0" class="active-filter px-6 py-2 rounded-3xl text-sm font-medium">All</button>
                         <button onclick="filterNotifications(1)" id="filter1" class="px-6 py-2 rounded-3xl text-sm font-medium">Unread</button>
@@ -942,9 +737,6 @@ $("#customSidebar").click(function(e) {
                     <div id="notificationsList" class="space-y-3">
                         <!-- Populated by JavaScript -->
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/notification.js"></script>
@@ -961,14 +753,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="messages">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="flex border-b border-slate-200 dark:border-slate-700 mb-8">
                         <button id="tab0" class="tab-active px-8 py-4 text-sm">Events</button>
                         <button id="tab1" class="px-8 py-4 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700">Memos &amp; Announcements</button>
@@ -1000,9 +785,6 @@ $("#customSidebar").click(function(e) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/message.js"></script>
@@ -1019,14 +801,7 @@ $("#customSidebar").click(function(e) {
 </template>
 
 <template id="profile">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-700 mb-8">
                         <div class="flex flex-col md:flex-row items-center gap-8">
                             <!-- Avatar -->
@@ -1171,9 +946,6 @@ $("#customSidebar").click(function(e) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/staff/settings.js"></script>
@@ -1191,18 +963,8 @@ $("#customSidebar").click(function(e) {
 
 <!-- Sample Template -->
 <template id="">
-    <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
-            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
-                <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-2xl mx-auto">
                     
-                </div>
-            </main>
-        </div>
     </div>
     
     <script src="/static/js/file.js"></script>
@@ -1220,13 +982,6 @@ $("#customSidebar").click(function(e) {
 
   <!-- error 404 page -->
   <template id="404">
-      
-      <div class="flex h-screen overflow-hidden">
-        <?use-template: "sidenav"?>
-        
-        <div class="flex-1 flex flex-col min-w-0">
-            <?use-template: "header"?>
-            
             <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950">
                 <div class="max-w-screen-2xl mx-auto">
                     <div class="pusher">
@@ -1244,77 +999,13 @@ $("#customSidebar").click(function(e) {
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
+        
     
 </template>
 
-<!-- Routes -->
-<!-- homepage -->
-<template route="/">
-  <?use-template: "dashboard"?>
-</template>
-<template route="/courses">
-  <?use-template: "courses"?>
-</template>
-<template route="/classes">
-  <?use-template: "classes"?>
-</template>
-<template route="/exams">
-  <?use-template: "exams"?>
-</template>
-<template route="/attendance">
-  <?use-template: "attendance"?>
-</template>
-<template route="/payroll">
-  <?use-template: "payroll"?>
-</template>
-<template route="/messages">
-  <?use-template: "messages"?>
-</template>
-<template route="/profile">
-  <?use-template: "profile"?>
-</template>
-<template route="/notifications">
-  <?use-template: "notifications"?>
-</template>
-
-<!-- Standard Meta -->
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-<!-- Site Properties -->
-<title></title>
-<link rel="shortcut icon" href="/static/logos/icon.png" />
-    <link rel="shortcut" href="/static/logos/icon.png" />
-    
-<link rel="stylesheet" type="text/css" href="/static/css/fontawesome.css">
-<link rel="stylesheet" type="text/css" href="/static/css/rigan.css">
-<link rel="stylesheet" type="text/css" href="/static/css/dashboard.css">
-
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/marked.min.js"></script>
-    <script src="/static/js/tailwind.min.js"></script>
-    <script src="/static/tinymce/tinymce.min.js"></script>
-    <script src="/static/module/educa-sdk.js"></script>
-    <script src="/static/module/swif.js"></script>
-    
-                                             
-<script src="/static/js/apexcharts.js"></script>                                      
-
-<script>
-var on = XJSX.event.on,
-emit = XJSX.event.emit;
-emit("hashchange");
-</script>
-
-<style type="text/css">
-  .hide-scrollbar::-webkit-scrollbar {display:none}
-  .hide-scrollbar {-ms-overflow-style: none; scrollbar-width: none;}
-</style>
 </head>
+
+
 <body class="bg-gray-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans">
     
             
@@ -1340,15 +1031,159 @@ emit("hashchange");
 
   <script src="/static/js/functions.js"></script>
 
-<?on: "hashchange"?>
+  <section class="section">
+    <div class="flex h-screen overflow-hidden">
+        <div id="customSidebar" class="hidden lg:hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[120] p-0 overflow-y-auto"></div>
+        <div id="sidebar" class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full fixed lg:relative z-[145] transition-transform duration-300 -translate-x-full lg:translate-x-0">
+                <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+                    <img src="" alt="school_logo" class="site-logo w-10 h-10 rounded-2xl font-bold shadow-inner" />
+                    <div>
+                        <span class="site-title text-1xl font-semibold tracking-tight text-[#1e3a8a] dark:text-blue-400"></span>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 -mt-1">Eduka Staff Portal</p>
+                    </div>
+                </div>
 
-<?eval:
-"var hash=location.hash
-hash=hash.replace(/^\/?#\/?|^/img,'/')
-var page=document.querySelector(`template[route='${hash}']`)||'404';"?>
+                <nav class="flex-1 px-4 py-6 overflow-y-auto">
+                    <div class="space-y-1">
+                        <a href="#" class="dash-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-tachometer"></span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#courses" class="course-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-book"></span>
+                            <span>Subjects &amp; Notes</span>
+                        </a>
+                        <a href="#classes" class="class-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-building"></span>
+                            <span>Classrooms</span>
+                        </a>
+                        <a href="#attendance" class="att-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-calendar"></span>
+                            <span>Attendance</span>
+                        </a>
+                        <a href="#exams" class="exams-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-file-text"></span>
+                            <span>Exams &amp; Tests</span>
+                        </a>
+                        <a href="#payroll"  class="pay-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-money"></span>
+                            <span>Payroll</span>
+                        </a>
+                        <a href="#profile" class="pro-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-gear"></span>
+                            <span>Profile & Settings</span>
+                        </a>
+                        <!--
+                        <a href="#notifications" class="note-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-bell-o"></span>
+                            <span>Notifications</span>
+                        </a>
+                        -->
+                        <a href="#messages" class="mess-act sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="text-xl fa fa-envelope"></span>
+                            <span>Notifications &amp; Events</span>
+                        </a>
+                    </div>
+                </nav>
 
-<?use-template: page?>
-<?end?>
+                <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+                    <a href="#profile" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <div class="w-9 h-9 bg-slate-200 dark:bg-slate-700 rounded-2xl overflow-hidden">
+                            <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <p class="admin-user font-medium text-sm"></p>
+                            <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
+                        </div>
+                    </a>
+                </div>
+        </div>
+        
+        <div class="flex-1 flex flex-col min-w-0">
+            
+            <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 h-16 lg:h-20 flex items-center px-6 z-40">
+                <div class="flex items-center justify-between w-full max-w-screen-2xl mx-auto">
+                    <div class="flex items-center gap-4">
+                        <button onclick="toggleSidebar()" class="side-btn lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <h1 class="page-name text-2xl font-semibold text-[#1e3a8a] dark:text-blue-400 tracking-tight"></h1>
+                    </div>
 
+                    <div class="flex items-center gap-4">
+                        <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-3xl px-5 py-2 w-80">
+                            <span class="text-slate-400 fa fa-search"></span>
+                            <input type="text" class="bg-transparent border-0 focus:outline-none ml-3 flex-1 text-sm placeholder-slate-400" placeholder="Search students, courses...">
+                        </div>
+
+                        <a href="#notifications" class="relative p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl">
+                            <span class="text-xl fa fa-bell-o"></span>
+                            <span class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-medium rounded-full flex items-center justify-center">3</span>
+                        </a>
+
+                        <button onclick="toggleDarkMode()" id="themeToggle" class="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-xl">
+                            <i class="fa fa-moon-o text-gray"></i>
+                        </button>
+
+                        <div onclick="window.location.href='#profile'" class="flex items-center gap-3 cursor-pointer">
+                            <div class="text-right hidden sm:block">
+                                <p class="admin-user font-semibold text-sm"></p>
+                                <p class="admin-role text-xs text-slate-500 dark:text-slate-400"></p>
+                            </div>
+                            <div class="w-9 h-9 rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-600">
+                                <img src="https://i.pravatar.cc/128?u=teacher" alt="Profile" class="admin-img w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-auto p-6 lg:p-8 bg-gray-50 dark:bg-slate-950"></main>
+        </div>
+    </div>
+  </section>
+
+  <script src="/static/js/staff/login.js"></script>
+    <script>
+          $('.logout-btn').click(function(e) {
+            e.preventDefault();
+            logout();
+          })
+        showSchoolInfo()
+        showUserInfo()
+        
+       
+        $("#customModal").on('click', function(e) {
+            // If clicked on backdrop (not on the modal content itself)
+            if (e.target === this) {
+                //alert("hi")
+                closeModal();
+            }
+        });
+    
+        $("#customSidebar").click(function(e) {
+            if(e.target === this) {
+                toggleSidebar()
+            }
+        })
+    
+        // Close with Escape key
+        $(document).on('keydown', function(e) {
+            //alert("hi")
+            if (e.key === "Escape") {
+                closeModal();
+            }
+            
+            //var side_btn = 
+            
+            if (e.target === this) {
+                //alert("hi")
+                closeModal();
+            }
+        });
+
+    </script>
 </body>
 </html>                                                                                                                                               

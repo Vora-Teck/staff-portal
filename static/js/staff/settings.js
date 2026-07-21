@@ -241,5 +241,6 @@ $(document).ready(async function() {
     showLoader("Loading Data...")
     initTailwind();
     loadTheme()
+    await showUserInfo()
     await loadProfile()
 });

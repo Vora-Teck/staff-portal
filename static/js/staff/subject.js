@@ -5,6 +5,7 @@ var currentTab = 0;
 var currentCourse = null;
 var currentTopic = null;
 
+
 async function getSyllabus(callback=null) {
     
 

@@ -41,6 +41,51 @@ function showModal(html, size = 'max-w-lg') {
     $('body').addClass('overflow-hidden');
 }
 
+
+// ============ utility functions ================
+var available_routes = [
+  "#dashboard", "#courses", "#classes", "#attendance", "#exams",
+  "#payroll", "#notifications", "#messages", "#profile"
+]
+function getHash() {
+  return window.location.hash || '#dashboard';
+}
+// Hash Routing System
+function showSection(hash) {
+  //console.log(hash)
+  $('main').empty();
+  $("nav a").removeClass('active bg-blue-50 dark:bg-blue-950 text-[#1e3a8a] dark:text-blue-400')
+  .addClass('text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800')
+  let html_content = $(`template${hash}`).html();
+  $('main').html(html_content)
+}
+
+async function navigateTo(hash) {
+  window.location.hash = hash;
+  await changeHash()
+}
+
+// Handle hash changes
+async function changeHash() {
+  let hash = window.location.hash || '#dashboard';
+  if(!available_routes.includes(hash)) {
+    hash = "#404"
+  }
+  showSection(hash);
+}
+window.onhashchange = changeHash;
+window.changeHash = changeHash;
+
+$(document).ready(async () => {
+  //console.log(getHash())
+  if(getHash() == "#" || getHash() == "") {
+    await navigateTo("#dashboard");
+  }
+  else {
+    await navigateTo(getHash())
+  }
+})
+
 // Examples:
 // Small modal
 //showModal(`<div class="p-8">...</div>`, 'max-w-md');
